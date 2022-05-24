@@ -1,13 +1,17 @@
 package org.serratec.lojasamazonas.model;
 
 import java.util.Date;
-
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
 @Entity
 @Table(name = "Cliente")
@@ -15,30 +19,44 @@ public class ClienteModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "cliente_cd_cliente")
 	private Long codigoCliente;
 
+	@NotNull
+	@Column(name = "cliente_tx_nome_completo")
 	private String nomeCompleto;
 
+	@Column(name = "cliente_tx_nome_usuario", unique = true)
 	private String nomeUsuario;
-
+	
+	@NotNull
+	@Column(name = "cliente_tx_email", unique = true)
 	private String email;
-
-	@Column(unique=true)
+	
+	@NotNull
+	@Column(name= "cliente_tx_cpf", unique = true)
 	private String cpf;
-
+	
+	@NotNull
+	@Column(name = "cliente_dt_nascimento")
 	private Date dataNascimento;
 
+	@NotNull
+	@Column(name = "cliente_tx_endereco")
 	private String endereco;
 
+	@NotNull
+	@Column(name = "cliente_tx_telefone")
 	private String telefone;
 
-	public ClienteModel() {
-	}
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
+	@JoinColumn(name = "cliente_list_pedidos")
+	private List<PedidoModel> pedidos;
 
-	public ClienteModel(Long codigoCliente, String nomeCompleto, String nomeUsuario, String email, String cpf,
+	public ClienteModel() {}
+
+	public ClienteModel(String nomeCompleto, String nomeUsuario, String email, String cpf,
 			Date dataNascimento, String endereco, String telefone) {
-		super();
-		this.codigoCliente = codigoCliente;
 		this.nomeCompleto = nomeCompleto;
 		this.nomeUsuario = nomeUsuario;
 		this.email = email;
@@ -50,10 +68,6 @@ public class ClienteModel {
 
 	public Long getCodigoCliente() {
 		return codigoCliente;
-	}
-
-	public void setCodigoCliente(Long codigoCliente) {
-		this.codigoCliente = codigoCliente;
 	}
 
 	public String getNomeCompleto() {
