@@ -1,13 +1,12 @@
 package org.serratec.lojasamazonas.model;
 
 import java.util.List;
-import javax.persistence.CascadeType;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -21,11 +20,11 @@ public class CategoriaModel {
 	private Long codigoCategoria;
 	
 	@NotNull
-	@Column(name = "categoria_tx_nome_categoria", unique = true)
+	@Column(name="categoria_tx_nome_categoria", unique = true)
 	private String nomeCategoria;
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "categoria")
-	@JoinColumn(name = "categoria_list_produto")
+	@OneToMany(mappedBy="categoria")
+	@Column(name="categoria_list_produto")
 	private List<ProdutoModel> produtos;
 
 	public CategoriaModel() {}

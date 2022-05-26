@@ -1,6 +1,8 @@
 package org.serratec.lojasamazonas.model;
 
 import java.util.Date;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -50,8 +53,14 @@ public class ProdutoModel {
 	private CategoriaModel categoria;
 	
 	@NotNull
-	@JoinColumn(name = "produto_funcionario")
+	@ManyToOne
+	@JoinColumn(name = "produto_cd_funcionario")
 	private FuncionarioModel funcionario;
+
+	@NotNull
+    @OneToMany(mappedBy = "produto")
+    @Column(name = "produto_list_pedido")
+    private List<ItemPedidoModel> itensPedido;
 
 	public ProdutoModel() {}
 

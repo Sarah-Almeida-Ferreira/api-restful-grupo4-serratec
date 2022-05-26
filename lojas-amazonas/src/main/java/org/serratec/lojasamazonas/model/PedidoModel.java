@@ -2,6 +2,7 @@ package org.serratec.lojasamazonas.model;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,28 +20,28 @@ public class PedidoModel {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "pedido_cod_pedido")
+	@Column(name="pedido_cd_pedido")
 	private Long codigoPedido;	
     
 	@NotNull
     @ManyToOne
-    @JoinColumn(name = "pedido_cd_cliente")
+    @JoinColumn(name="pedido_cd_cliente")
     private ClienteModel cliente;
 
 	@NotNull
-	@Column(name= "pedido_dt_pedido")
+	@Column(name="pedido_dt_pedido")
 	private LocalDateTime dataPedido;
 	
 	@NotNull
-    @OneToMany
-    @JoinColumn(name = "pedido_list_produto")
-    private List<ProdutoModel> produtosPedido;
+    @OneToMany(mappedBy="pedido")
+    @Column(name="pedido_list_produto")
+    private List<ItemPedidoModel> itensPedido;
     
     public PedidoModel() {}
     
-	public PedidoModel(ClienteModel cliente, List<ProdutoModel> produtosPedido) {
+	public PedidoModel(ClienteModel cliente, List<ItemPedidoModel> itensPedido) {
 		this.cliente = cliente;
-		this.produtosPedido = produtosPedido;
+		this.itensPedido = itensPedido;
 	}
 
 	public Long getCodigoPedido() {
@@ -67,12 +68,12 @@ public class PedidoModel {
 		this.dataPedido = dataPedido;
 	}
 
-	public List<ProdutoModel> getProdutosPedido() {
-		return produtosPedido;
+	public List<ItemPedidoModel> getProdutosPedido() {
+		return itensPedido;
 	}
 
-	public void setProdutosPedido(List<ProdutoModel> produtosPedido) {
-		this.produtosPedido = produtosPedido;
+	public void setProdutosPedido(List<ItemPedidoModel> itensPedido) {
+		this.itensPedido = itensPedido;
 	}
     
 }
