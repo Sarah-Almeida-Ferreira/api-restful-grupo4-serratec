@@ -21,17 +21,31 @@ public class ClienteModel {
 
 	private String nomeUsuario;
 
+<<<<<<< Updated upstream
 	private String email;
 
 	@Column(unique=true)
 	private String cpf;
 
+=======
+	@NotNull
+	@Column(name = "cliente_tx_email", unique = true)
+	private String email;
+
+	@NotNull
+	@Column(name = "cliente_tx_cpf", unique = true)
+	private String cpf;
+
+	@NotNull
+	@Column(name = "cliente_dt_nascimento")
+>>>>>>> Stashed changes
 	private Date dataNascimento;
 
 	private String endereco;
 
 	private String telefone;
 
+<<<<<<< Updated upstream
 	public ClienteModel() {
 	}
 
@@ -39,6 +53,17 @@ public class ClienteModel {
 			Date dataNascimento, String endereco, String telefone) {
 		super();
 		this.codigoCliente = codigoCliente;
+=======
+	@OneToMany(mappedBy = "cliente")
+	@Column(name = "cliente_list_pedidos")
+	private List<PedidoModel> pedidos;
+
+	public ClienteModel() {
+	}
+
+	public ClienteModel(String nomeCompleto, String nomeUsuario, String email, String cpf, Date dataNascimento,
+			String endereco, String telefone) {
+>>>>>>> Stashed changes
 		this.nomeCompleto = nomeCompleto;
 		this.nomeUsuario = nomeUsuario;
 		this.email = email;

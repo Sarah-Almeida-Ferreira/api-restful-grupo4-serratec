@@ -8,10 +8,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Funcionario")
+@Table(name = "Funcionario")
 public class FuncionarioModel {
 
 	@Id
+<<<<<<< Updated upstream
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long codigoFuncionario;
 	
@@ -20,6 +21,24 @@ public class FuncionarioModel {
 	@Column(unique=true)
 	private String cpf;
 
+=======
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "funcionario_cd_funcionario")
+	private Long codigoFuncionario;
+
+	@NotNull
+	@Column(name = "funcionario_tx_nome_funcionario")
+	private String nomeFuncionario;
+
+	@NotNull
+	@Column(unique = true)
+	private String cpf;
+
+	@OneToMany(mappedBy = "funcionario")
+	@Column(name = "funcionario_list_produtos")
+	private List<ProdutoModel> produtos;
+
+>>>>>>> Stashed changes
 	public FuncionarioModel() {
 	}
 
@@ -55,4 +74,3 @@ public class FuncionarioModel {
 	}
 
 }
-
