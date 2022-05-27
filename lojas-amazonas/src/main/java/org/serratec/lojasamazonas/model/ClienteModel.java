@@ -4,7 +4,6 @@ import java.util.Date;
 
 import java.util.List;
 
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,9 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-
-import javax.persistence.Table;
-
 
 @Entity
 @Table(name = "Cliente")
@@ -34,15 +30,15 @@ public class ClienteModel {
 
 	@Column(name = "cliente_tx_nome_usuario", unique = true)
 	private String nomeUsuario;
-	
+
 	@NotNull
 	@Column(name = "cliente_tx_email", unique = true)
 	private String email;
-	
+
 	@NotNull
-	@Column(name= "cliente_tx_cpf", unique = true)
+	@Column(name = "cliente_tx_cpf", unique = true)
 	private String cpf;
-	
+
 	@NotNull
 	@Column(name = "cliente_dt_nascimento")
 	private Date dataNascimento;
@@ -55,54 +51,9 @@ public class ClienteModel {
 	@Column(name = "cliente_tx_telefone")
 	private String telefone;
 
-	private Long codigoCliente;
-
-	private String nomeCompleto;
-
-	private String nomeUsuario;
-
-
-	private String email;
-
-	@Column(unique=true)
-	private String cpf;
-
-
-	@NotNull
-	@Column(name = "cliente_tx_email", unique = true)
-	private String email;
-
-	@NotNull
-	@Column(name = "cliente_tx_cpf", unique = true)
-	private String cpf;
-
-	@NotNull
-	@Column(name = "cliente_dt_nascimento")
-
-	private Date dataNascimento;
-
-	private String endereco;
-
-	private String telefone;
-
-
-	public ClienteModel() {
-	}
-
-	public ClienteModel(Long codigoCliente, String nomeCompleto, String nomeUsuario, String email, String cpf,
-			Date dataNascimento, String endereco, String telefone) {
-		super();
-		this.codigoCliente = codigoCliente;
-
 	@OneToMany(mappedBy = "cliente")
 	@Column(name = "cliente_list_pedidos")
 	private List<PedidoModel> pedidos;
-
-
-	public ClienteModel() {}
-
-	public ClienteModel(String nomeCompleto, String nomeUsuario, String email, String cpf,
-			Date dataNascimento, String endereco, String telefone) {
 
 	public ClienteModel() {
 	}
@@ -123,11 +74,9 @@ public class ClienteModel {
 		return codigoCliente;
 	}
 
-
 	public void setCodigoCliente(Long codigoCliente) {
 		this.codigoCliente = codigoCliente;
 	}
-
 
 	public String getNomeCompleto() {
 		return nomeCompleto;
@@ -184,4 +133,4 @@ public class ClienteModel {
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
-
+}
