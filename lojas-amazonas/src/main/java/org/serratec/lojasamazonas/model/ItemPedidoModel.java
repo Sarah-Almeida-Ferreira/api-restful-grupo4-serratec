@@ -41,6 +41,10 @@ public class ItemPedidoModel {
 		return produto;
 	}
 
+	public Long getCodigoItemPedido() {
+		return codigoItemPedido;
+	}
+
 	public void setProduto(ProdutoModel produto) {
 		this.produto = produto;
 	}
