@@ -8,6 +8,7 @@ public class FuncionarioMapper {
 	public FuncionarioModel toModel(FuncionarioDTO funcionarioDTO) {
 		FuncionarioModel funcionarioModel = new FuncionarioModel();
 
+		funcionarioDTO.setCodigoFuncionario(funcionarioModel.getId());
 		funcionarioDTO.setNomeFuncionario(funcionarioModel.getNomeFuncionario());
 		funcionarioDTO.setCpf(funcionarioModel.getCpf());
 
@@ -17,6 +18,7 @@ public class FuncionarioMapper {
 	public FuncionarioDTO toDTO(FuncionarioModel funcionarioModel) {
 		FuncionarioDTO funcionarioDTO = new FuncionarioDTO();
 
+		funcionarioModel.setId(funcionarioDTO.getCodigoFuncionario());
 		funcionarioModel.setNomeFuncionario(funcionarioDTO.getNomeFuncionario());
 		funcionarioModel.setCpf(funcionarioDTO.getCpf());
 
