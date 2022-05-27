@@ -1,10 +1,35 @@
 package org.serratec.lojasamazonas.model;
 
+
+import java.util.List;
+
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+@Entity
+@Table(name="Funcionario")
+public class FuncionarioModel {
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name = "funcionario_cd_funcionario")
+	private Long codigoFuncionario;
+	
+	@NotNull
+	@Column(name = "funcionario_tx_nome_funcionario")
+	private String nomeFuncionario;
+	
+	@NotNull
+	@Column(unique=true)
+
 import javax.persistence.Table;
 
 @Entity
@@ -12,7 +37,7 @@ import javax.persistence.Table;
 public class FuncionarioModel {
 
 	@Id
-<<<<<<< Updated upstream
+
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long codigoFuncionario;
 	
@@ -21,7 +46,6 @@ public class FuncionarioModel {
 	@Column(unique=true)
 	private String cpf;
 
-=======
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "funcionario_cd_funcionario")
 	private Long codigoFuncionario;
@@ -32,15 +56,20 @@ public class FuncionarioModel {
 
 	@NotNull
 	@Column(unique = true)
+
 	private String cpf;
 
 	@OneToMany(mappedBy = "funcionario")
 	@Column(name = "funcionario_list_produtos")
 	private List<ProdutoModel> produtos;
 
->>>>>>> Stashed changes
+
+	public FuncionarioModel() {}
+
+
 	public FuncionarioModel() {
 	}
+
 
 	public FuncionarioModel(Long codigoFuncionario, String nomeFuncionario, String cpf) {
 		super();
@@ -74,3 +103,4 @@ public class FuncionarioModel {
 	}
 
 }
+
