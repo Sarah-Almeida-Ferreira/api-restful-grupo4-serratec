@@ -27,15 +27,15 @@ public class ClienteModel {
 
 	@Column(name = "cliente_tx_nome_usuario", unique = true)
 	private String nomeUsuario;
-	
+
 	@NotNull
 	@Column(name = "cliente_tx_email", unique = true)
 	private String email;
-	
+
 	@NotNull
-	@Column(name= "cliente_tx_cpf", unique = true)
+	@Column(name = "cliente_tx_cpf", unique = true)
 	private String cpf;
-	
+
 	@NotNull
 	@Column(name = "cliente_dt_nascimento")
 	private Date dataNascimento;

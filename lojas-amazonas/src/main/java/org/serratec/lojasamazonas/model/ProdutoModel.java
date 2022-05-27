@@ -15,43 +15,42 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name="Produto")
+@Table(name = "Produto")
 public class ProdutoModel {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name= "produto_cd_produto")
 	private Long codigoProduto;
-	
+
 	@NotNull
 	@Column(name = "produto_tx_nome", unique = true)
 	private String nomeProduto;
-	
-	
+
 	@Column(name = "produto_tx_descricao")
 	private String descricao;
-	
+
 	@NotNull
 	@Column(name = "produto_num_valor_unitario")
 	private Double valorUnitario;
-	
+
 	@NotNull
 	@Column(name = "produto_dt_fabricacao")
 	private Date dataFabricacao;
-	
+
 	@NotNull
 	@Column(name = "produto_dt_periodo_validade")
 	private Date periodoValidade;
-	
+
 	@NotNull
 	@Column(name = "produto_tx_qtd_estoque")
 	private Integer quantidadeEstoque;
-	
+
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name="produto_cd_categoria")
+	@JoinColumn(name = "produto_cd_categoria")
 	private CategoriaModel categoria;
-	
+
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "produto_cd_funcionario")
