@@ -37,4 +37,36 @@ public class ItemPedidoModel {
 	@Column(name="item_num_valor_item")	
 	private Double valorTotalItem;
 
+	public ProdutoModel getProduto() {
+		return produto;
+	}
+
+	public void setProduto(ProdutoModel produto) {
+		this.produto = produto;
+	}
+
+	public PedidoModel getPedido() {
+		return pedido;
+	}
+
+	public void setPedido(PedidoModel pedido) {
+		this.pedido = pedido;
+	}
+
+	public Integer getQuantidade() {
+		return quantidade;
+	}
+
+	public void setQuantidade(Integer quantidade) {
+		this.quantidade = quantidade;
+	}
+
+	public Double getValorTotalItem() {
+		return valorTotalItem;
+	}
+
+	public void setValorTotalItem(Double valorTotalItem) {
+		this.valorTotalItem = valorTotalItem;
+	}
+
 }

@@ -1,26 +1,18 @@
 package org.serratec.lojasamazonas.model;
 
 import java.util.Date;
-
 import java.util.List;
 
 import javax.persistence.Column;
-
-
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-
-import javax.persistence.Table;
-
 
 @Entity
 @Table(name="Produto")
@@ -28,7 +20,6 @@ public class ProdutoModel {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-
 	@Column(name= "produto_cd_produto")
 	private Long codigoProduto;
 	
@@ -75,50 +66,19 @@ public class ProdutoModel {
 
 	public ProdutoModel(String nomeProduto, String descricao, Double valorUnitario,
 			Date dataFabricacao, Date periodoValidade, Integer quantidadeEstoque, CategoriaModel categoria, FuncionarioModel funcionario) {	
-
-	private Long codigoProduto;
-	
-	private String nomeProduto;
-	
-	private String descricao;
-	
-	private Double valorUnitario;
-	
-	private Date dataFabricacao;
-	
-	private Date periodoValidade;
-	
-	private Integer quantidadeEstoque;
-
-	public ProdutoModel() {
-	}
-
-	public ProdutoModel(Long codigoProduto, String nomeProduto, String descricao, Double valorUnitario,
-			Date dataFabricacao, Date periodoValidade, Integer quantidadeEstoque) {
-		super();
-		this.codigoProduto = codigoProduto;
-
 		this.nomeProduto = nomeProduto;
 		this.descricao = descricao;
 		this.valorUnitario = valorUnitario;
 		this.dataFabricacao = dataFabricacao;
 		this.periodoValidade = periodoValidade;
 		this.quantidadeEstoque = quantidadeEstoque;
-
 		this.categoria = categoria;
 		this.funcionario = funcionario;
-
 	}
 
 	public Long getCodigoProduto() {
 		return codigoProduto;
 	}
-
-
-	public void setCodigoProduto(Long codigoProduto) {
-		this.codigoProduto = codigoProduto;
-	}
-
 
 	public String getNomeProduto() {
 		return nomeProduto;
@@ -168,7 +128,6 @@ public class ProdutoModel {
 		this.quantidadeEstoque = quantidadeEstoque;
 	}
 
-
 	public CategoriaModel getCategoria() {
 		return categoria;
 	}
@@ -186,5 +145,3 @@ public class ProdutoModel {
 	}
 
 }
-
-
