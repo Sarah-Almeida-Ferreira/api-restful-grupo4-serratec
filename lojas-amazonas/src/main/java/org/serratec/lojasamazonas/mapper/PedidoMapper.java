@@ -29,6 +29,7 @@ public class PedidoMapper {
 		
 		PedidoModel model = new PedidoModel();		
 		Optional<ClienteModel> cliente = clienteRepository.findById(dto.getCliente());
+		// TODO SERVICE DO CLIENTE QUANDO ESTIVER CRIADORES
 		
 		model.setCliente(cliente.get());
 		model.setDataPedido(dto.getDataPedido());
