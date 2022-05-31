@@ -20,10 +20,8 @@ public class ClienteService {
 	
 	public List<ClienteDTO> getAll(){
 		List<ClienteDTO> clienteDTOs = clienteMapper.toDTO(clienteRepository.findAll());  
-		return clienteDTOs;
-		
-	}
-	
+		return clienteDTOs;		
+	}	
 	
 	public String create(ClienteDTO clienteDTO) {
 		ClienteModel cliente = clienteMapper.toModel(clienteDTO); 
@@ -34,11 +32,17 @@ public class ClienteService {
 	public ClienteDTO getById(long codigoCliente) throws ItemNotFoundException {
 		Optional<ClienteModel> cliente = clienteRepository.findById(codigoCliente);
 		if (cliente.isEmpty()) {
-			throw new ItemNotFoundException("Nenhum cliente com código: "+ codigoCliente +" encontrado.");
+			throw new ItemNotFoundException("Nenhum cliente com código "+ codigoCliente +" encontrado.");
 		}
-		return clienteMapper.toDTO(cliente.get());
-		
+		return clienteMapper.toDTO(cliente.get());		
 	}
-
+	
+	public ClienteModel getByIdModel(long codigoCliente) throws ItemNotFoundException {
+		Optional<ClienteModel> cliente = clienteRepository.findById(codigoCliente);
+		if (cliente.isEmpty()) {
+			throw new ItemNotFoundException("Nenhum cliente com código "+ codigoCliente +" encontrado.");
+		}
+		return cliente.get();
+	}
 
 }

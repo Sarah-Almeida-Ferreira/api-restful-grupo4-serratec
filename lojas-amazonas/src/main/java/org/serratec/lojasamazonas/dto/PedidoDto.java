@@ -2,13 +2,13 @@ package org.serratec.lojasamazonas.dto;
 
 import java.time.LocalDateTime;
 
-public class PedidoResponseDto {
+public class PedidoDto {
 
 	private Long codigoPedido;
 	private Long cliente;
 	private LocalDateTime dataPedido;
 	
-	public PedidoResponseDto() {}
+	public PedidoDto() {}
 	
 	public Long getCodigoPedido() {
 		return codigoPedido;

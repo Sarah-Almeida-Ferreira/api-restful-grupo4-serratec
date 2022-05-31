@@ -1,10 +1,10 @@
 package org.serratec.lojasamazonas.mapper;
 
-import java.util.Optional;
-import org.serratec.lojasamazonas.dto.PedidoResponseDto;
+import org.serratec.lojasamazonas.dto.PedidoDto;
+import org.serratec.lojasamazonas.exception.ItemNotFoundException;
 import org.serratec.lojasamazonas.model.ClienteModel;
 import org.serratec.lojasamazonas.model.PedidoModel;
-import org.serratec.lojasamazonas.repository.ClienteRepository;
+import org.serratec.lojasamazonas.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,11 +12,11 @@ import org.springframework.stereotype.Component;
 public class PedidoMapper {
 	
 	@Autowired
-	ClienteRepository clienteRepository;
+	ClienteService clienteService;
 	
-	PedidoResponseDto fromModelToDto(PedidoModel model) {
+	PedidoDto fromModelToDto(PedidoModel model) {
 		
-		PedidoResponseDto dto = new PedidoResponseDto();
+		PedidoDto dto = new PedidoDto();
 		
 		dto.setCodigoPedido(model.getCodigoPedido());
 		dto.setCliente(model.getCliente().getCodigoCliente());
@@ -25,13 +25,12 @@ public class PedidoMapper {
 		return dto;
 	}
 	
-	PedidoModel fromDtoToModel(PedidoResponseDto dto) {
+	PedidoModel fromDtoToModel(PedidoDto dto) throws ItemNotFoundException {
 		
-		PedidoModel model = new PedidoModel();		
-		Optional<ClienteModel> cliente = clienteRepository.findById(dto.getCliente());
-		// TODO SERVICE DO CLIENTE QUANDO ESTIVER CRIADORES
+		PedidoModel model = new PedidoModel();
+		ClienteModel cliente = clienteService.getByIdModel(dto.getCodigoPedido());
 		
-		model.setCliente(cliente.get());
+		model.setCliente(cliente);
 		model.setDataPedido(dto.getDataPedido());
 		
 		return model;
