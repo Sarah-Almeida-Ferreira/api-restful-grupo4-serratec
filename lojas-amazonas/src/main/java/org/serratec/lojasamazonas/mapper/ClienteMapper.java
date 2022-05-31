@@ -1,8 +1,12 @@
 package org.serratec.lojasamazonas.mapper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.serratec.lojasamazonas.dto.ClienteDTO;
 import org.serratec.lojasamazonas.model.ClienteModel;
-
+import org.springframework.stereotype.Component;
+@Component
 public class ClienteMapper {
 	
 	
@@ -33,6 +37,16 @@ public class ClienteMapper {
 		clienteDTO.setTelefone(clienteDTO.getTelefone());
 		
 		return clienteDTO;
+	}
+	
+	public List<ClienteDTO> toDTO(List<ClienteModel> models){
+		List<ClienteDTO> dtos = new ArrayList<>();
+		
+		for (ClienteModel model : models) {
+			dtos.add(toDTO(model));
+		}
+		
+		return dtos;
 	}
 
 }
