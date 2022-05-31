@@ -3,33 +3,44 @@ package org.serratec.lojasamazonas.mapper;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.serratec.lojasamazonas.dto.CategoriaResponseDto;
+import org.serratec.lojasamazonas.dto.CategoriaDTO;
+import org.serratec.lojasamazonas.dto.CategoriaDTORequest;
 import org.serratec.lojasamazonas.model.CategoriaModel;
-import org.serratec.lojasamazonas.model.ProdutoModel;
 import org.springframework.stereotype.Component;
 
 @Component
 public class CategoriaMapper {
 	
-	public CategoriaResponseDto fromModelToDto(CategoriaModel model) {
+	public CategoriaDTO toDTO(CategoriaModel model) {
 		
-		CategoriaResponseDto dto = new CategoriaResponseDto();
-		List<ProdutoModel> listaPodutos = model.getProdutos();
-		List<Long> codigosProdutos = new ArrayList<Long>();
-		
-		for (ProdutoModel produto : listaPodutos) {
-			
-			Long codigoProduto = produto.getCodigoProduto();
-			
-			codigosProdutos.add(codigoProduto);
-		}
+		CategoriaDTO dto = new CategoriaDTO();
 		
 		dto.setCodigoCategoria(model.getCodigoCategoria());		
 		dto.setNomeCategoria(model.getNomeCategoria());
-		dto.setCodigosProdutos(codigosProdutos);
 		
 		return dto;
 		
 	}
 	
+	public CategoriaModel toModel(CategoriaDTORequest dto) {
+		
+		CategoriaModel model = new CategoriaModel();
+		
+		model.setNomeCategoria(dto.getNomeCategoria());
+		
+		return model;
+		
+	}
+	
+	public List<CategoriaDTO> toDTO(List<CategoriaModel> models) {
+		
+		List<CategoriaDTO> dtos = new ArrayList<>();
+		
+		for(CategoriaModel model : models) {
+			dtos.add(toDTO(model));
+		}
+		
+		return dtos;
+		
+	}
 }
