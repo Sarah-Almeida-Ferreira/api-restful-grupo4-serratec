@@ -1,16 +1,16 @@
 package org.serratec.lojasamazonas.dto;
 
-public class ItemPedidoRequestDto {
+public class ItemPedidoDTORequest {
 	
 	private Long codigoPedido;
 	private Long codigoProduto;
 	private Integer quantidade;
 	
-	public ItemPedidoRequestDto() {
+	public ItemPedidoDTORequest() {
 
 	}
 	
-	public ItemPedidoRequestDto(Long codigoPedido, Long codigoProduto, Integer quantidade) {
+	public ItemPedidoDTORequest(Long codigoPedido, Long codigoProduto, Integer quantidade) {
 		this.codigoPedido = codigoPedido;
 		this.codigoProduto = codigoProduto;
 		this.quantidade = quantidade;
