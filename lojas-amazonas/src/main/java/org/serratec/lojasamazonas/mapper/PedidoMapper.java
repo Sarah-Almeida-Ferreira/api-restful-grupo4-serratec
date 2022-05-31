@@ -1,5 +1,8 @@
 package org.serratec.lojasamazonas.mapper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.serratec.lojasamazonas.dto.PedidoDto;
 import org.serratec.lojasamazonas.exception.ItemNotFoundException;
 import org.serratec.lojasamazonas.model.ClienteModel;
@@ -14,7 +17,7 @@ public class PedidoMapper {
 	@Autowired
 	ClienteService clienteService;
 	
-	PedidoDto fromModelToDto(PedidoModel model) {
+	public PedidoDto toDto(PedidoModel model) {
 		
 		PedidoDto dto = new PedidoDto();
 		
@@ -25,7 +28,22 @@ public class PedidoMapper {
 		return dto;
 	}
 	
-	PedidoModel fromDtoToModel(PedidoDto dto) throws ItemNotFoundException {
+	public List<PedidoDto> toDto(List<PedidoModel> listModel) {
+		List<PedidoDto> listDto = new ArrayList<>();
+		PedidoDto dto = new PedidoDto();
+		
+		for(PedidoModel model : listModel) {
+			dto.setCodigoPedido(model.getCodigoPedido());
+			dto.setCliente(model.getCliente().getCodigoCliente());
+			dto.setDataPedido(model.getDataPedido());
+			
+			listDto.add(dto);
+		}
+		
+		return listDto;
+	}
+	
+	public PedidoModel toModel(PedidoDto dto) throws ItemNotFoundException {
 		
 		PedidoModel model = new PedidoModel();
 		ClienteModel cliente = clienteService.getByIdModel(dto.getCodigoPedido());
