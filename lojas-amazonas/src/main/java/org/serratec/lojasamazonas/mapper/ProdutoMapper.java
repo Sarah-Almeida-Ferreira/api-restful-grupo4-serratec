@@ -28,7 +28,7 @@ public class ProdutoMapper {
 		produtoDTO.setCodigoProduto(produtoModel.getCodigoProduto());
 		produtoDTO.setDataFabricacao(produtoModel.getDataFabricacao());
 		produtoDTO.setDescricao(produtoModel.getDescricao());
-		produtoDTO.setFuncionario(funcionarioService.getByCodigo(produtoModel.getFuncionario().getCodigoFuncionario()));
+		produtoDTO.setFuncionario(funcionarioService.getByCodigo(produtoModel.getFuncionario().getId()));
 		produtoDTO.setNomeProduto(produtoModel.getNomeProduto());
 		produtoDTO.setPeriodoValidade(produtoModel.getPeriodoValidade());
 		produtoDTO.setQuantidadeEstoque(produtoModel.getQuantidadeEstoque());
@@ -38,8 +38,8 @@ public class ProdutoMapper {
 	}
 	public ProdutoModel toModel(ProdutoDTO produtoDTO) throws ItemNotFoundException {
 		ProdutoModel produtoModel = new ProdutoModel();
-		produtoModel.setFuncionario(funcionarioService.getByCodigo(produtoDTO.getCodigoFuncionario()));
-		produtoModel.setCategoria(categoriaService.getByCodigo(produtoDTO.getCodigoCategoria()));
+		produtoModel.setFuncionario(funcionarioService.getModelByCodigo(produtoDTO.getCodigoFuncionario()));
+		produtoModel.setCategoria(categoriaService.getModelByCodigo(produtoDTO.getCodigoCategoria()));
 		produtoModel.setDataFabricacao(produtoDTO.getDataFabricacao());
 		produtoModel.setDescricao(produtoDTO.getDescricao());
 		produtoModel.setNomeProduto(produtoDTO.getNomeProduto());
@@ -59,7 +59,7 @@ public class ProdutoMapper {
 			produtoDTO.setCodigoProduto(produtoModel.getCodigoProduto());
 			produtoDTO.setDataFabricacao(produtoModel.getDataFabricacao());
 			produtoDTO.setDescricao(produtoModel.getDescricao());
-			produtoDTO.setFuncionario(funcionarioService.getByCodigo(produtoModel.getFuncionario().getCodigoFuncionario()));
+			produtoDTO.setFuncionario(funcionarioService.getByCodigo(produtoModel.getFuncionario().getId()));
 			produtoDTO.setNomeProduto(produtoModel.getNomeProduto());
 			produtoDTO.setPeriodoValidade(produtoModel.getPeriodoValidade());
 			produtoDTO.setQuantidadeEstoque(produtoModel.getQuantidadeEstoque());

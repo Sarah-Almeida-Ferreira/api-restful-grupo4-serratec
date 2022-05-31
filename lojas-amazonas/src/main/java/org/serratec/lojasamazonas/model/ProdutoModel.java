@@ -14,8 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import org.serratec.lojasamazonas.dto.CategoriaDTO;
-import org.serratec.lojasamazonas.dto.FuncionarioDTO;
+
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -54,12 +53,12 @@ public class ProdutoModel {
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "produto_cd_categoria")
-	private CategoriaDTO categoria;
+	private CategoriaModel categoria;
 
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "produto_cd_funcionario")
-	private FuncionarioDTO funcionario;
+	private FuncionarioModel funcionario;
 
 	@JsonIgnore
     @OneToMany(mappedBy = "produto")
@@ -69,7 +68,7 @@ public class ProdutoModel {
 	public ProdutoModel() {}
 
 	public ProdutoModel(String nomeProduto, String descricao, Double valorUnitario,
-			Date dataFabricacao, Date periodoValidade, Integer quantidadeEstoque, CategoriaDTO categoria, FuncionarioDTO funcionario) {	
+			Date dataFabricacao, Date periodoValidade, Integer quantidadeEstoque, CategoriaModel categoria, FuncionarioModel funcionario) {	
 		this.nomeProduto = nomeProduto;
 		this.descricao = descricao;
 		this.valorUnitario = valorUnitario;
@@ -132,19 +131,19 @@ public class ProdutoModel {
 		this.quantidadeEstoque = quantidadeEstoque;
 	}
 
-	public CategoriaDTO getCategoria() {
+	public CategoriaModel getCategoria() {
 		return categoria;
 	}
 
-	public void setCategoria(CategoriaDTO categoria) {
+	public void setCategoria(CategoriaModel categoria) {
 		this.categoria = categoria;
 	}
 
-	public FuncionarioDTO getFuncionario() {
+	public FuncionarioModel getFuncionario() {
 		return funcionario;
 	}
 
-	public void setFuncionario(FuncionarioDTO funcionario) {
+	public void setFuncionario(FuncionarioModel funcionario) {
 		this.funcionario = funcionario;
 	}
 

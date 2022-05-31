@@ -42,6 +42,16 @@ public class FuncionarioService {
 		
 		return funcionarioMapper.toDTO(funcionario.get());
 	}
+
+	public FuncionarioModel getModelByCodigo(Long codigoFuncionario) throws ItemNotFoundException {
+			Optional<FuncionarioModel> funcionario = funcionarioRepository.findById(codigoFuncionario);
+			
+			if(funcionario.isEmpty()) {
+				throw new ItemNotFoundException("Nenhum funcionário com o CÓDIGO " + codigoFuncionario + " encontrado!");
+			}
+			
+			return funcionario.get();
+		}
 	
 	// post
 	// get

@@ -45,6 +45,16 @@ public class CategoriaService {
 		
 		return mapper.toDTO(categoria.get());
 	}
+
+	public CategoriaModel getModelByCodigo(Long codigoCategoria) throws ItemNotFoundException {
+		Optional<CategoriaModel> categoria = repository.findById(codigoCategoria);
+		
+		if (categoria.isEmpty()) {
+			throw new ItemNotFoundException("Nenhuma categoria com CÓDIGO " + codigoCategoria + " encontrada!");
+		}
+		
+		return categoria.get();
+	}
 	
 
 }
