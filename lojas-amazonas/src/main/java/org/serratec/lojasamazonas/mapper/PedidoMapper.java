@@ -3,6 +3,7 @@ package org.serratec.lojasamazonas.mapper;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.serratec.lojasamazonas.dto.PedidoDTORequest;
 import org.serratec.lojasamazonas.dto.PedidoDto;
 import org.serratec.lojasamazonas.exception.ItemNotFoundException;
 import org.serratec.lojasamazonas.model.ClienteModel;
@@ -43,10 +44,10 @@ public class PedidoMapper {
 		return listDto;
 	}
 	
-	public PedidoModel toModel(PedidoDto dto) throws ItemNotFoundException {
+	public PedidoModel toModel(PedidoDTORequest dto) throws ItemNotFoundException {
 		
 		PedidoModel model = new PedidoModel();
-		ClienteModel cliente = clienteService.getByIdModel(dto.getCodigoPedido());
+		ClienteModel cliente = clienteService.getByIdModel(dto.getCliente());
 		
 		model.setCliente(cliente);
 		model.setDataPedido(dto.getDataPedido());

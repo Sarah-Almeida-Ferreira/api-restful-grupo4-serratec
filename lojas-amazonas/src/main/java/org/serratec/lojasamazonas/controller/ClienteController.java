@@ -3,6 +3,7 @@ package org.serratec.lojasamazonas.controller;
 import java.util.List;
 
 import org.serratec.lojasamazonas.dto.ClienteDTO;
+import org.serratec.lojasamazonas.dto.ClienteDTORequest;
 import org.serratec.lojasamazonas.exception.ItemNotFoundException;
 import org.serratec.lojasamazonas.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +25,12 @@ public class ClienteController {
 		return ResponseEntity.ok(clienteService.getAll());
 	}
 	@PostMapping
-	public ResponseEntity<String> create(@RequestBody ClienteDTO clienteDTO){
+	public ResponseEntity<String> create(@RequestBody ClienteDTORequest clienteDTO){
 		return ResponseEntity.ok(clienteService.create(clienteDTO));
 		
 	}
-	@GetMapping("/[codigoCliente]")
-	public ResponseEntity<ClienteDTO> getById(@PathVariable long codigoCliente) throws ItemNotFoundException{
+	@GetMapping("/{codigoCliente}")
+	public ResponseEntity<ClienteDTO> getById(@PathVariable Long codigoCliente) throws ItemNotFoundException{
 		return ResponseEntity.ok(clienteService.getById(codigoCliente));
 	}
 	

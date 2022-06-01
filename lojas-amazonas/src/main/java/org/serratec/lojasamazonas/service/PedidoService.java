@@ -2,6 +2,8 @@ package org.serratec.lojasamazonas.service;
 
 import java.util.List;
 import java.util.Optional;
+
+import org.serratec.lojasamazonas.dto.PedidoDTORequest;
 import org.serratec.lojasamazonas.dto.PedidoDto;
 import org.serratec.lojasamazonas.exception.ItemNotFoundException;
 import org.serratec.lojasamazonas.mapper.PedidoMapper;
@@ -19,21 +21,37 @@ public class PedidoService {
 	@Autowired
 	PedidoMapper pedidoMapper;
 	
-	public String create(PedidoDto pedidoDto) throws ItemNotFoundException {
+	public String create(PedidoDTORequest pedidoDto) throws ItemNotFoundException {
 		PedidoModel pedidoModel = pedidoMapper.toModel(pedidoDto);
+		
 		pedidoRepository.save(pedidoModel);
 		
 		return String.format("Pedido código %d criado com sucesso!", pedidoModel.getCodigoPedido());
 	}
 	
+<<<<<<< Updated upstream
 	public PedidoModel getModelByCodigo(Long codigoPedido) throws ItemNotFoundException {
 		Optional<PedidoModel> model = pedidoRepository.findById(codigoPedido);
 		
 		if(model.isPresent()) {			
 			return model.get();
 		}	
+=======
+	public PedidoDto getByCodigo(Long codigoPedido) throws ItemNotFoundException {
 		
-		throw new ItemNotFoundException("Não foi possível encontrar nenhum pedido com o código informado!");
+		return pedidoMapper.toDto( getModelByCodigo(codigoPedido));
+	}
+	
+	public PedidoModel getModelByCodigo(Long codigoPedido) throws ItemNotFoundException {
+		Optional<PedidoModel> pedidoModel = pedidoRepository.findById(codigoPedido);
+		
+		if(pedidoModel.isEmpty()) {
+			throw new ItemNotFoundException("Não foi possível encontrar nenhum pedido com o código informado!");
+		}
+>>>>>>> Stashed changes
+		
+		return pedidoModel.get();
+		
 	}
 	
 	public PedidoDto getByCodigo(Long codigoPedido) throws ItemNotFoundException {		

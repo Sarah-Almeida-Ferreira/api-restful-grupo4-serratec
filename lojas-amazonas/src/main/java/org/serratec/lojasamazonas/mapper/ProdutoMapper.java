@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.serratec.lojasamazonas.dto.ProdutoDTO;
+import org.serratec.lojasamazonas.dto.ProdutoDTORequest;
 import org.serratec.lojasamazonas.exception.ItemNotFoundException;
 import org.serratec.lojasamazonas.model.ProdutoModel;
 import org.serratec.lojasamazonas.service.CategoriaService;
@@ -23,19 +24,20 @@ public class ProdutoMapper {
 	public ProdutoDTO toDTO(ProdutoModel produtoModel) throws ItemNotFoundException {
 
 		ProdutoDTO produtoDTO = new ProdutoDTO();
-		produtoDTO.setCategoria(categoriaService.getByCodigo(produtoModel.getCategoria().getCodigoCategoria()));
+		
 		produtoDTO.setCodigoProduto(produtoModel.getCodigoProduto());
 		produtoDTO.setDataFabricacao(produtoModel.getDataFabricacao());
 		produtoDTO.setDescricao(produtoModel.getDescricao());
-		produtoDTO.setFuncionario(funcionarioService.getByCodigo(produtoModel.getFuncionario().getId()));
 		produtoDTO.setNomeProduto(produtoModel.getNomeProduto());
 		produtoDTO.setPeriodoValidade(produtoModel.getPeriodoValidade());
 		produtoDTO.setQuantidadeEstoque(produtoModel.getQuantidadeEstoque());
 		produtoDTO.setValorUnitario(produtoModel.getValorUnitario());
+		produtoDTO.setCodigoCategoria(produtoModel.getCategoria().getCodigoCategoria());
+		produtoDTO.setCodigoFuncionario(produtoModel.getFuncionario().getId());
 
 		return produtoDTO;
 	}
-	public ProdutoModel toModel(ProdutoDTO produtoDTO) throws ItemNotFoundException {
+	public ProdutoModel toModel(ProdutoDTORequest produtoDTO) throws ItemNotFoundException {
 		ProdutoModel produtoModel = new ProdutoModel();
 		produtoModel.setFuncionario(funcionarioService.getModelByCodigo(produtoDTO.getCodigoFuncionario()));
 		produtoModel.setCategoria(categoriaService.getModelByCodigo(produtoDTO.getCodigoCategoria()));
@@ -49,22 +51,11 @@ public class ProdutoMapper {
 		return produtoModel;
 	}
 	
-	public List<ProdutoDTO> listToDTO(List<ProdutoModel> listaModel) throws ItemNotFoundException {
+	public List<ProdutoDTO> toDTO(List<ProdutoModel> listaModel) throws ItemNotFoundException {
 		List<ProdutoDTO> listaProdutoDTO = new ArrayList<>();
-		ProdutoDTO produtoDTO = new ProdutoDTO();
 		
 		for(ProdutoModel produtoModel : listaModel) {
-			produtoDTO.setCategoria(categoriaService.getByCodigo(produtoModel.getCategoria().getCodigoCategoria()));
-			produtoDTO.setCodigoProduto(produtoModel.getCodigoProduto());
-			produtoDTO.setDataFabricacao(produtoModel.getDataFabricacao());
-			produtoDTO.setDescricao(produtoModel.getDescricao());
-			produtoDTO.setFuncionario(funcionarioService.getByCodigo(produtoModel.getFuncionario().getId()));
-			produtoDTO.setNomeProduto(produtoModel.getNomeProduto());
-			produtoDTO.setPeriodoValidade(produtoModel.getPeriodoValidade());
-			produtoDTO.setQuantidadeEstoque(produtoModel.getQuantidadeEstoque());
-			produtoDTO.setValorUnitario(produtoModel.getValorUnitario());
-			
-			listaProdutoDTO.add(produtoDTO);
+			listaProdutoDTO.add(toDTO(produtoModel));
 		}
 		
 		return listaProdutoDTO;

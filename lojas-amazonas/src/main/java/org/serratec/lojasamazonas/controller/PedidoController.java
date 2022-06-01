@@ -1,6 +1,8 @@
 package org.serratec.lojasamazonas.controller;
 
 import java.util.List;
+
+import org.serratec.lojasamazonas.dto.PedidoDTORequest;
 import org.serratec.lojasamazonas.dto.PedidoDto;
 import org.serratec.lojasamazonas.exception.ItemNotFoundException;
 import org.serratec.lojasamazonas.service.PedidoService;
@@ -23,8 +25,12 @@ public class PedidoController {
 	PedidoService pedidoService;
 	
 	@PostMapping
+<<<<<<< Updated upstream
 	public ResponseEntity<String> create(@RequestBody PedidoDto pedidoDto)
 			throws ItemNotFoundException {
+=======
+	public ResponseEntity<String> create(@RequestBody PedidoDTORequest pedidoDto) throws ItemNotFoundException {
+>>>>>>> Stashed changes
 		return ResponseEntity.ok(pedidoService.create(pedidoDto));
 	}
 	

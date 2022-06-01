@@ -32,7 +32,6 @@ public class PedidoModel {
 	@Column(name="pedido_dt_pedido")
 	private LocalDateTime dataPedido;
 	
-	@NotNull
     @OneToMany(mappedBy="pedido")
     @Column(name="pedido_list_produto")
     private List<ItemPedidoModel> itensPedido;

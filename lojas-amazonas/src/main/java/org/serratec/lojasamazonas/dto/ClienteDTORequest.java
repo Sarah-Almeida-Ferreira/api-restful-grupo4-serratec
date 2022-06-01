@@ -2,9 +2,8 @@ package org.serratec.lojasamazonas.dto;
 
 import java.util.Date;
 
-public class ClienteDTO {
-
-	private Long codigoCliente;
+public class ClienteDTORequest {
+	
 	private String nomeCompleto;
 	private String nomeUsuario;
 	private String email;
@@ -13,17 +12,7 @@ public class ClienteDTO {
 	private String endereco;
 	private String telefone;
 	
-	public ClienteDTO() {
-		super();
-	}
-
-	public Long getCodigoCliente() {
-		return codigoCliente;
-	}
-
-	public void setCodigoCliente(Long codigoCliente) {
-		this.codigoCliente = codigoCliente;
-	}
+	public ClienteDTORequest() {}
 
 	public String getNomeCompleto() {
 		return nomeCompleto;
@@ -80,6 +69,5 @@ public class ClienteDTO {
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
-
 
 }
