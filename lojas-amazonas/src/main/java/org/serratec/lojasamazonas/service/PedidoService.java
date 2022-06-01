@@ -26,21 +26,46 @@ public class PedidoService {
 		return String.format("Pedido código %d criado com sucesso!", pedidoModel.getCodigoPedido());
 	}
 	
-	public PedidoDto getByCodigo(Long codigoPedido) throws ItemNotFoundException {
-		Optional<PedidoModel> pedidoModel = pedidoRepository.findById(codigoPedido);
+	public PedidoModel getModelByCodigo(Long codigoPedido) throws ItemNotFoundException {
+		Optional<PedidoModel> model = pedidoRepository.findById(codigoPedido);
 		
-		if(pedidoModel.isPresent()) {
-			PedidoDto pedidoDto = pedidoMapper.toDto(pedidoModel.get());
-			return pedidoDto;
-		}
+		if(model.isPresent()) {			
+			return model.get();
+		}	
 		
 		throw new ItemNotFoundException("Não foi possível encontrar nenhum pedido com o código informado!");
+	}
+	
+	public PedidoDto getByCodigo(Long codigoPedido) throws ItemNotFoundException {		
+			PedidoModel model = getModelByCodigo(codigoPedido);
+			PedidoDto dto = pedidoMapper.toDto(model);
+			
+			return dto;
 	}
 	
 	public List<PedidoDto> getAll() {
 		List<PedidoDto> listaDto = pedidoMapper.toDto(pedidoRepository.findAll());
 		
 		return listaDto;
+	}
+	
+	public String update(Long codigoPedido, PedidoDto dto) throws ItemNotFoundException {
+		PedidoModel model = getModelByCodigo(codigoPedido);
+		
+		if(dto.getCliente() != null) {
+			
+		}
+		if(dto.getDataPedido() != null) {
+			model.setDataPedido(dto.getDataPedido());
+		}
+		
+		return String.format("Pedido código %d atualizado com sucesso!", codigoPedido);
+	}
+	
+	public String delete(Long codigoPedido) throws ItemNotFoundException {
+		PedidoModel model = getModelByCodigo(codigoPedido);
+		
+		return String.format("Pedido código %d deletado com sucesso!", model.getCodigoPedido());
 	}
 
 }
