@@ -19,7 +19,6 @@ public class ProdutoMapper {
 	
 	@Autowired
 	FuncionarioService funcionarioService;
-
 	
 	public ProdutoDTO toDTO(ProdutoModel produtoModel) throws ItemNotFoundException {
 

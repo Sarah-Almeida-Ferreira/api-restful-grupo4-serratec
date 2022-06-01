@@ -2,10 +2,6 @@ package org.serratec.lojasamazonas.dto;
 
 import java.util.Date;
 
-
-
-
-
 public class ProdutoDTO {
 
 	private Long codigoProduto;
@@ -23,15 +19,12 @@ public class ProdutoDTO {
 	private Integer quantidadeEstoque;
 
 	private Long codigoCategoria;
-	
+
 	private Long codigoFuncionario;
-	
+
 	private CategoriaDTO categoria;
 
 	private FuncionarioDTO funcionario;
-
-	
-
 
 	public ProdutoDTO() {
 		super();
@@ -53,12 +46,6 @@ public class ProdutoDTO {
 		this.categoria = categoria;
 		this.funcionario = funcionario;
 	}
-
-
-
-
-
-
 
 	public Long getCodigoProduto() {
 		return codigoProduto;
@@ -132,9 +119,6 @@ public class ProdutoDTO {
 		this.funcionario = funcionario;
 	}
 
-	
-	
-
 	public Long getCodigoCategoria() {
 		return codigoCategoria;
 	}
@@ -143,18 +127,12 @@ public class ProdutoDTO {
 		this.codigoCategoria = codigoCategoria;
 	}
 
-
-
 	public Long getCodigoFuncionario() {
 		return codigoFuncionario;
 	}
-
-
 
 	public void setCodigoFuncionario(Long codigoFuncionario) {
 		this.codigoFuncionario = codigoFuncionario;
 	}
 
-	
-	
 }

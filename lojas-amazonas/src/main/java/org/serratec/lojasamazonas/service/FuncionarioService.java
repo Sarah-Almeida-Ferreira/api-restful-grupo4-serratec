@@ -17,46 +17,56 @@ public class FuncionarioService {
 
 	@Autowired
 	FuncionarioRepository funcionarioRepository;
-	
+
 	@Autowired
 	FuncionarioMapper funcionarioMapper;
 	
+	public FuncionarioModel getModelByCodigo(Long codigoFuncionario) throws ItemNotFoundException {
+		Optional<FuncionarioModel> funcionario = funcionarioRepository.findById(codigoFuncionario);
+
+		if (funcionario.isEmpty()) {
+			throw new ItemNotFoundException("Nenhum funcionário com o CÓDIGO " + codigoFuncionario + " encontrado!");
+		}
+
+		return funcionario.get();
+	}
+
 	public String create(FuncionarioDTORequest funcionarioDTO) {
-		FuncionarioModel funcionario =	funcionarioMapper.toModel(funcionarioDTO);
-				
+		FuncionarioModel funcionario = funcionarioMapper.toModel(funcionarioDTO);
+
 		funcionarioRepository.save(funcionario);
 		return String.format("Funcionário CÓDIGO %d cadastrado com sucesso!", funcionario.getId());
 	}
-	
-	public List<FuncionarioDTO> getAll(){
-		List<FuncionarioDTO> funcionarioDTOs = funcionarioMapper.toDTO(funcionarioRepository.findAll());  
+
+	public List<FuncionarioDTO> getAll() {
+		List<FuncionarioDTO> funcionarioDTOs = funcionarioMapper.toDTO(funcionarioRepository.findAll());
 		return funcionarioDTOs;
 	}
-	
+
 	public FuncionarioDTO getByCodigo(Long codigoFuncionario) throws ItemNotFoundException {
-		Optional<FuncionarioModel> funcionario = funcionarioRepository.findById(codigoFuncionario);
-		
-		if(funcionario.isEmpty()) {
-			throw new ItemNotFoundException("Nenhum funcionário com o CÓDIGO " + codigoFuncionario + " encontrado!");
-		}
-		
-		return funcionarioMapper.toDTO(funcionario.get());
+		FuncionarioModel funcionario = getModelByCodigo(codigoFuncionario);
+
+		return funcionarioMapper.toDTO(funcionario);
 	}
 
-	public FuncionarioModel getModelByCodigo(Long codigoFuncionario) throws ItemNotFoundException {
-			Optional<FuncionarioModel> funcionario = funcionarioRepository.findById(codigoFuncionario);
-			
-			if(funcionario.isEmpty()) {
-				throw new ItemNotFoundException("Nenhum funcionário com o CÓDIGO " + codigoFuncionario + " encontrado!");
-			}
-			
-			return funcionario.get();
+	public String update(Long codigoFuncionario, FuncionarioDTORequest funcionarioDTO) throws ItemNotFoundException {
+		FuncionarioModel funcionario = getModelByCodigo(codigoFuncionario);
+
+		if (funcionarioDTO.getNomeFuncionario() != null) {
+			funcionario.setNomeFuncionario(funcionarioDTO.getNomeFuncionario());
 		}
-	
-	// post
-	// get
-//	get all
-	// update
-	//delete
+		if (funcionarioDTO.getCpf() != null) {
+			funcionario.setCpf(funcionarioDTO.getCpf());
+
+		}
+		return String.format("Funcionário CÓDIGO %d atualizado com sucesso!", funcionario.getId());
+	}
+
+	public String delete(Long codigoFuncionario) throws ItemNotFoundException {
+		FuncionarioModel funcionario = getModelByCodigo(codigoFuncionario);
+
+		funcionarioRepository.deleteById(codigoFuncionario);
+		return String.format("Funcionário CÓDIGO %d deletado com sucesso!", funcionario.getId());
+	}
 
 }
