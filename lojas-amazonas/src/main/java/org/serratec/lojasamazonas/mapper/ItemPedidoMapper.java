@@ -44,7 +44,7 @@ public class ItemPedidoMapper {
 		ItemPedidoDTO dto = new ItemPedidoDTO();
 		
 		dto.setCodigoPedido(model.getPedido().getCodigoPedido());
-		dto.setCodigoProduto(model.getCodigoItemPedido());
+		dto.setCodigoProduto(model.getProduto().getCodigoProduto());
 		dto.setQuantidade(model.getQuantidade());
 		dto.setValorTotalItem(model.getValorTotalItem());
 		

@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.serratec.lojasamazonas.dto.CategoriaDTO;
 import org.serratec.lojasamazonas.dto.CategoriaDTORequest;
 import org.serratec.lojasamazonas.exception.ItemNotFoundException;
+import org.serratec.lojasamazonas.exception.MayNotBeNullException;
 import org.serratec.lojasamazonas.mapper.CategoriaMapper;
 import org.serratec.lojasamazonas.model.CategoriaModel;
 import org.serratec.lojasamazonas.repository.CategoriaRepository;
@@ -54,6 +55,30 @@ public class CategoriaService {
 		}
 		
 		return categoria.get();
+	}
+	
+	public String update(Long codigoCategoria, CategoriaDTORequest categoriaDTO) throws MayNotBeNullException, ItemNotFoundException {
+		
+		CategoriaModel categoria = getModelByCodigo(codigoCategoria);
+		
+		if (categoriaDTO.getNomeCategoria().equals("")) {
+			throw new MayNotBeNullException("O nome da categoria não pode ser nulo!");
+		}
+		
+		categoria.setNomeCategoria(categoriaDTO.getNomeCategoria());
+		
+		repository.save(categoria);
+		
+		return String.format("Categoria CÓDIGO %d atualizada com sucesso!", codigoCategoria);
+	}
+	
+	public String delete(Long codigoCategoria) throws ItemNotFoundException {
+		
+		CategoriaModel categoria = getModelByCodigo(codigoCategoria);
+		
+		repository.delete(categoria);
+		
+		return String.format("Categoria CÓDIGO %d excluída com sucesso!", codigoCategoria);
 	}
 	
 

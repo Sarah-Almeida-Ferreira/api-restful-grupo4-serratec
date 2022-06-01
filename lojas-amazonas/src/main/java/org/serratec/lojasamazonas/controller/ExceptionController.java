@@ -2,6 +2,7 @@ package org.serratec.lojasamazonas.controller;
 
 import org.serratec.lojasamazonas.exception.EmailException;
 import org.serratec.lojasamazonas.exception.ItemNotFoundException;
+import org.serratec.lojasamazonas.exception.MayNotBeNullException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -18,4 +19,10 @@ public class ExceptionController {
 	public ResponseEntity<String> handleEmailException(EmailException exception) {		
 	      return ResponseEntity.badRequest().header("x-erro-msg", exception.getMessage()).build();
 	   }
+	
+	@ExceptionHandler(MayNotBeNullException.class)
+	public ResponseEntity<String> handleMayNotBeNullException(MayNotBeNullException exception) {
+		return ResponseEntity.badRequest().header("x-erro-msg", exception.getMessage()).build();
+	}
+	
 }
