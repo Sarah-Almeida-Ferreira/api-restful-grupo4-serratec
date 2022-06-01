@@ -29,14 +29,6 @@ public class PedidoService {
 		return String.format("Pedido código %d criado com sucesso!", pedidoModel.getCodigoPedido());
 	}
 	
-<<<<<<< Updated upstream
-	public PedidoModel getModelByCodigo(Long codigoPedido) throws ItemNotFoundException {
-		Optional<PedidoModel> model = pedidoRepository.findById(codigoPedido);
-		
-		if(model.isPresent()) {			
-			return model.get();
-		}	
-=======
 	public PedidoDto getByCodigo(Long codigoPedido) throws ItemNotFoundException {
 		
 		return pedidoMapper.toDto( getModelByCodigo(codigoPedido));
@@ -48,17 +40,9 @@ public class PedidoService {
 		if(pedidoModel.isEmpty()) {
 			throw new ItemNotFoundException("Não foi possível encontrar nenhum pedido com o código informado!");
 		}
->>>>>>> Stashed changes
 		
 		return pedidoModel.get();
 		
-	}
-	
-	public PedidoDto getByCodigo(Long codigoPedido) throws ItemNotFoundException {		
-			PedidoModel model = getModelByCodigo(codigoPedido);
-			PedidoDto dto = pedidoMapper.toDto(model);
-			
-			return dto;
 	}
 	
 	public List<PedidoDto> getAll() {

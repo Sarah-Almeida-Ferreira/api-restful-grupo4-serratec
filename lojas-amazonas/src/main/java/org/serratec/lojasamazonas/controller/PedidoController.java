@@ -25,12 +25,7 @@ public class PedidoController {
 	PedidoService pedidoService;
 	
 	@PostMapping
-<<<<<<< Updated upstream
-	public ResponseEntity<String> create(@RequestBody PedidoDto pedidoDto)
-			throws ItemNotFoundException {
-=======
 	public ResponseEntity<String> create(@RequestBody PedidoDTORequest pedidoDto) throws ItemNotFoundException {
->>>>>>> Stashed changes
 		return ResponseEntity.ok(pedidoService.create(pedidoDto));
 	}
 	

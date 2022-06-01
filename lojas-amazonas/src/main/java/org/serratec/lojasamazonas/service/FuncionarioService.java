@@ -59,6 +59,9 @@ public class FuncionarioService {
 			funcionario.setCpf(funcionarioDTO.getCpf());
 
 		}
+		
+		funcionarioRepository.save(funcionario);
+		
 		return String.format("Funcionário CÓDIGO %d atualizado com sucesso!", funcionario.getId());
 	}
 

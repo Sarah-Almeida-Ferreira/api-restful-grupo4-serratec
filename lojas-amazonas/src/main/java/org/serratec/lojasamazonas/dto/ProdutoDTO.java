@@ -12,40 +12,11 @@ public class ProdutoDTO {
 	private Date periodoValidade;
 	private Integer quantidadeEstoque;
 	private Long codigoCategoria;
-<<<<<<< Updated upstream
-
 	private Long codigoFuncionario;
 
-	private CategoriaDTO categoria;
-
-	private FuncionarioDTO funcionario;
-
-	public ProdutoDTO() {
-		super();
-	}
-
-	public ProdutoDTO(Long codigoProduto, String nomeProduto, String descricao, Double valorUnitario,
-			Date dataFabricacao, Date periodoValidade, Integer quantidadeEstoque, Long codigoCategoria,
-			Long codigoFuncionario, CategoriaDTO categoria, FuncionarioDTO funcionario) {
-		super();
-		this.codigoProduto = codigoProduto;
-		this.nomeProduto = nomeProduto;
-		this.descricao = descricao;
-		this.valorUnitario = valorUnitario;
-		this.dataFabricacao = dataFabricacao;
-		this.periodoValidade = periodoValidade;
-		this.quantidadeEstoque = quantidadeEstoque;
-		this.codigoCategoria = codigoCategoria;
-		this.codigoFuncionario = codigoFuncionario;
-		this.categoria = categoria;
-		this.funcionario = funcionario;
-	}
-=======
-	private Long codigoFuncionario;
-	
 	public ProdutoDTO() {}
->>>>>>> Stashed changes
 
+	
 	public Long getCodigoProduto() {
 		return codigoProduto;
 	}
@@ -102,36 +73,21 @@ public class ProdutoDTO {
 		this.quantidadeEstoque = quantidadeEstoque;
 	}
 
-<<<<<<< Updated upstream
-	public CategoriaDTO getCategoria() {
-		return categoria;
-	}
 
-	public void setCategoria(CategoriaDTO categoria) {
-		this.categoria = categoria;
-	}
-
-	public FuncionarioDTO getFuncionario() {
-		return funcionario;
-	}
-
-	public void setFuncionario(FuncionarioDTO funcionario) {
-		this.funcionario = funcionario;
-	}
-
-=======
->>>>>>> Stashed changes
 	public Long getCodigoCategoria() {
 		return codigoCategoria;
 	}
+
 
 	public void setCodigoCategoria(Long codigoCategoria) {
 		this.codigoCategoria = codigoCategoria;
 	}
 
+
 	public Long getCodigoFuncionario() {
 		return codigoFuncionario;
 	}
+
 
 	public void setCodigoFuncionario(Long codigoFuncionario) {
 		this.codigoFuncionario = codigoFuncionario;
