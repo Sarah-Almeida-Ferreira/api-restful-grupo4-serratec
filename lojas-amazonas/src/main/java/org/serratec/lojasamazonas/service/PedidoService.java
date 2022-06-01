@@ -19,6 +19,9 @@ public class PedidoService {
 	PedidoRepository pedidoRepository;
 	
 	@Autowired
+	ClienteService clienteService;
+	
+	@Autowired
 	PedidoMapper pedidoMapper;
 	
 	public String create(PedidoDTORequest pedidoDto) throws ItemNotFoundException {
@@ -55,12 +58,13 @@ public class PedidoService {
 		PedidoModel model = getModelByCodigo(codigoPedido);
 		
 		if(dto.getCliente() != null) {
-			
+			model.setCliente(clienteService.getByIdModel(dto.getCliente()));
 		}
 		if(dto.getDataPedido() != null) {
 			model.setDataPedido(dto.getDataPedido());
 		}
 		
+		pedidoRepository.save(model);		
 		return String.format("Pedido código %d atualizado com sucesso!", codigoPedido);
 	}
 	
