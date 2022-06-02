@@ -40,7 +40,7 @@ public class EmailService {
 		Properties prop = new Properties();
 
 		enviarEmail.setHost(host);
-		enviarEmail.setPort(465);
+		enviarEmail.setPort(587);
 		enviarEmail.setUsername(userName);
 		enviarEmail.setPassword(password);
 		enviarEmail.setProtocol("smtp");

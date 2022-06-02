@@ -2,14 +2,9 @@ package org.serratec.lojasamazonas.service;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.serratec.lojasamazonas.dto.ProdutoDTO;
 import org.serratec.lojasamazonas.dto.ProdutoDTORequest;
-<<<<<<< Updated upstream
 import org.serratec.lojasamazonas.exception.ItemAlreadyExistsException;
-=======
-import org.serratec.lojasamazonas.exception.EstoqueInsuficienteException;
->>>>>>> Stashed changes
 import org.serratec.lojasamazonas.exception.ItemNotFoundException;
 import org.serratec.lojasamazonas.mapper.ProdutoMapper;
 import org.serratec.lojasamazonas.model.ItemPedidoModel;
@@ -52,7 +47,6 @@ public class ProdutoService {
 		return String.format("Produto CÓDIGO %d criado com sucesso! ", produtoModel.getCodigoProduto());
 	}
 	
-<<<<<<< Updated upstream
 	public void atualizarEstoque(List<ItemPedidoModel> itens) {
 		for (ItemPedidoModel item : itens) {
 			ProdutoModel produto = item.getProduto();
@@ -92,17 +86,3 @@ public class ProdutoService {
 		return String.format("Produto CODIGO %d Deletado com sucesso!", codigoProduto);
 	}
 }
-=======
-	public void updateStock(Integer qtdItemPedido, ItemPedidoModel model) throws ItemNotFoundException, EstoqueInsuficienteException {
-		ProdutoModel produto = getModelById(model.getProduto().getCodigoProduto());
-		Integer qtdEstoque = produto.getQuantidadeEstoque();
-		
-		if(qtdEstoque < qtdItemPedido) {
-			throw new EstoqueInsuficienteException("Estoque Insuficiente para efetuar a venda");
-		}
-		
-		produto.setQuantidadeEstoque(qtdEstoque - qtdItemPedido);
-	}
-	
-}
->>>>>>> Stashed changes
