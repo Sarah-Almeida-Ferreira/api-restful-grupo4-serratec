@@ -8,7 +8,11 @@ import javax.mail.MessagingException;
 
 import org.serratec.lojasamazonas.dto.PedidoDTORequest;
 import org.serratec.lojasamazonas.dto.PedidoDto;
+import org.serratec.lojasamazonas.dto.PedidoDtoUpdate;
+import org.serratec.lojasamazonas.exception.CannotBeChangedException;
 import org.serratec.lojasamazonas.exception.EmailException;
+import org.serratec.lojasamazonas.exception.InsufficientStockException;
+import org.serratec.lojasamazonas.exception.ItemAlreadyExistsException;
 import org.serratec.lojasamazonas.exception.ItemNotFoundException;
 import org.serratec.lojasamazonas.mapper.PedidoMapper;
 import org.serratec.lojasamazonas.model.PedidoModel;
@@ -26,6 +30,9 @@ public class PedidoService {
 
 	@Autowired
 	ClienteService clienteService;
+	
+	@Autowired
+	ProdutoService produtoService;
 
 	@Autowired
 	PedidoMapper pedidoMapper;
@@ -65,8 +72,10 @@ public class PedidoService {
 		return listaDto;
 	}
 
-	public String update(Long codigoPedido, PedidoDto dto) throws ItemNotFoundException {
+	public String update(Long codigoPedido, PedidoDtoUpdate dto) throws ItemNotFoundException, InsufficientStockException, CannotBeChangedException, MessagingException, EmailException, ItemAlreadyExistsException {
 		PedidoModel model = getModelByCodigo(codigoPedido);
+		
+		Validation.VerificarSePodeSerAlterado(model);
 
 		if (dto.getCliente() != null) {
 			model.setCliente(clienteService.getByIdModel(dto.getCliente()));
@@ -74,25 +83,33 @@ public class PedidoService {
 		if (dto.getDataPedido() != null) {
 			model.setDataPedido(dto.getDataPedido());
 		}
-		if(dto.getStatus() != null) {
+		if(dto.getStatus() == StatusPedido.CANCELADO) {
 			model.setStatus(dto.getStatus());
+		}
+		if(dto.getStatus() == StatusPedido.FINALIZADO) {
+			finalizar(codigoPedido);
 		}
 
 		pedidoRepository.save(model);
 		return String.format("Pedido código %d atualizado com sucesso!", codigoPedido);
 	}
 
-	public String finalizar(Long codigoPedido) throws ItemNotFoundException, MessagingException, EmailException {
+	public String finalizar(Long codigoPedido) throws ItemNotFoundException, MessagingException, EmailException, 
+		ItemAlreadyExistsException, InsufficientStockException, CannotBeChangedException {
+		
 		PedidoModel pedido = getModelByCodigo(codigoPedido);
 
-		if (Validation.naoPodeSerFinalizada(pedido)) {
-
-		}
-
+		Validation.VerificarSePodeSerFinalizado(pedido);
+		
 		pedido.setStatus(StatusPedido.FINALIZADO);
 		pedido.setDataPedido(LocalDateTime.now());
+		
+		produtoService.atualizarEstoque(pedido.getItensPedido());
+		
 		pedidoRepository.save(pedido);
+		
 		email.emailCompra(pedido);
+		
 		return String.format("Pedido código %d finalizado com sucesso!", codigoPedido);
 	}
 

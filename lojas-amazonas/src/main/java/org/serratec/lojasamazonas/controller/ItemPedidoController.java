@@ -4,6 +4,9 @@ import java.util.List;
 
 import org.serratec.lojasamazonas.dto.ItemPedidoDTO;
 import org.serratec.lojasamazonas.dto.ItemPedidoDTORequest;
+import org.serratec.lojasamazonas.exception.CannotBeChangedException;
+import org.serratec.lojasamazonas.exception.InsufficientStockException;
+import org.serratec.lojasamazonas.exception.ItemAlreadyExistsException;
 import org.serratec.lojasamazonas.exception.ItemNotFoundException;
 import org.serratec.lojasamazonas.service.ItemPedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +28,12 @@ public class ItemPedidoController {
 	ItemPedidoService service;
 	
 	@PostMapping
-	public ResponseEntity<String> create(@RequestBody ItemPedidoDTORequest itemPedido) throws ItemNotFoundException {
+	public ResponseEntity<String> create(@RequestBody ItemPedidoDTORequest itemPedido) throws ItemNotFoundException, ItemAlreadyExistsException, InsufficientStockException, CannotBeChangedException {
 		return ResponseEntity.ok(service.create(itemPedido));
 	}
 	
 	@PostMapping("/criarMuitos")
-	public ResponseEntity<String> createMany(@RequestBody List<ItemPedidoDTORequest> itensPedido) throws ItemNotFoundException {
+	public ResponseEntity<String> createMany(@RequestBody List<ItemPedidoDTORequest> itensPedido) throws ItemNotFoundException, ItemAlreadyExistsException, InsufficientStockException, CannotBeChangedException {
 		return ResponseEntity.ok(service.create(itensPedido));
 	}
 	

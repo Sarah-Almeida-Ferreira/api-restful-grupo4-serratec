@@ -5,11 +5,15 @@ import java.util.Optional;
 
 import org.serratec.lojasamazonas.dto.ItemPedidoDTO;
 import org.serratec.lojasamazonas.dto.ItemPedidoDTORequest;
+import org.serratec.lojasamazonas.exception.CannotBeChangedException;
+import org.serratec.lojasamazonas.exception.InsufficientStockException;
+import org.serratec.lojasamazonas.exception.ItemAlreadyExistsException;
 import org.serratec.lojasamazonas.exception.ItemNotFoundException;
 import org.serratec.lojasamazonas.mapper.ItemPedidoMapper;
 import org.serratec.lojasamazonas.model.ItemPedidoModel;
 import org.serratec.lojasamazonas.model.PedidoModel;
 import org.serratec.lojasamazonas.repository.ItemPedidoRepository;
+import org.serratec.lojasamazonas.util.Validation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,9 +32,12 @@ public class ItemPedidoService {
 	@Autowired
 	ProdutoService produtoService;
 	
-	public String create(ItemPedidoDTORequest itemPedido) throws ItemNotFoundException {
+	public String create(ItemPedidoDTORequest itemPedido) throws ItemNotFoundException, ItemAlreadyExistsException, InsufficientStockException, CannotBeChangedException {
 		
 		ItemPedidoModel item = mapper.toModel(itemPedido);
+		
+		Validation.VerificarSePodeSerAlterado(item.getPedido());
+		Validation.verificarSeHaEstoqueSuficiente(item);
 		
 		item.setValorTotalItem(item.getProduto().getValorUnitario() * item.getQuantidade());
 		
@@ -39,9 +46,12 @@ public class ItemPedidoService {
 		return ("Item de pedido incluído com sucesso!");
 	}
 	
-	public String create(List<ItemPedidoDTORequest> itensPedidoDTO) throws ItemNotFoundException {
+	public String create(List<ItemPedidoDTORequest> itensPedidoDTO) throws ItemNotFoundException, ItemAlreadyExistsException, InsufficientStockException, CannotBeChangedException {
 		
 		List<ItemPedidoModel> itensPedidoModels = mapper.toModel(itensPedidoDTO); 
+		
+		Validation.VerificarSePodeSerAlterado(itensPedidoModels);
+		Validation.verificarSeHaEstoqueSuficiente(itensPedidoModels);
 		
 		for (ItemPedidoModel item : itensPedidoModels) {
 			item.setValorTotalItem(item.getProduto().getValorUnitario() * item.getQuantidade());

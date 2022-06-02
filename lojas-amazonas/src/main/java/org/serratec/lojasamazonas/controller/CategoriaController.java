@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.serratec.lojasamazonas.dto.CategoriaDTO;
 import org.serratec.lojasamazonas.dto.CategoriaDTORequest;
+import org.serratec.lojasamazonas.exception.ItemAlreadyExistsException;
 import org.serratec.lojasamazonas.exception.ItemNotFoundException;
 import org.serratec.lojasamazonas.exception.MayNotBeNullException;
 import org.serratec.lojasamazonas.service.CategoriaService;
@@ -26,7 +27,7 @@ public class CategoriaController {
 	CategoriaService service;
 	
 	@PostMapping
-	public ResponseEntity<String> create(@RequestBody CategoriaDTORequest categoria) {
+	public ResponseEntity<String> create(@RequestBody CategoriaDTORequest categoria) throws ItemAlreadyExistsException {
 		return ResponseEntity.ok(service.crate(categoria));
 	}
 	

@@ -5,10 +5,12 @@ import java.util.Optional;
 
 import org.serratec.lojasamazonas.dto.FuncionarioDTO;
 import org.serratec.lojasamazonas.dto.FuncionarioDTORequest;
+import org.serratec.lojasamazonas.exception.ItemAlreadyExistsException;
 import org.serratec.lojasamazonas.exception.ItemNotFoundException;
 import org.serratec.lojasamazonas.mapper.FuncionarioMapper;
 import org.serratec.lojasamazonas.model.FuncionarioModel;
 import org.serratec.lojasamazonas.repository.FuncionarioRepository;
+import org.serratec.lojasamazonas.util.Validation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,9 @@ public class FuncionarioService {
 	@Autowired
 	FuncionarioMapper funcionarioMapper;
 	
+	@Autowired
+	Validation validation;
+	
 	public FuncionarioModel getModelByCodigo(Long codigoFuncionario) throws ItemNotFoundException {
 		Optional<FuncionarioModel> funcionario = funcionarioRepository.findById(codigoFuncionario);
 
@@ -31,7 +36,9 @@ public class FuncionarioService {
 		return funcionario.get();
 	}
 
-	public String create(FuncionarioDTORequest funcionarioDTO) {
+	public String create(FuncionarioDTORequest funcionarioDTO) throws ItemAlreadyExistsException {
+		validation.verificarSeCpfJáFoiCadastrado(funcionarioDTO.getCpf());
+		
 		FuncionarioModel funcionario = funcionarioMapper.toModel(funcionarioDTO);
 
 		funcionarioRepository.save(funcionario);

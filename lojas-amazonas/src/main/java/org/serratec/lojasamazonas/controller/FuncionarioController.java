@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.serratec.lojasamazonas.dto.FuncionarioDTO;
 import org.serratec.lojasamazonas.dto.FuncionarioDTORequest;
+import org.serratec.lojasamazonas.exception.ItemAlreadyExistsException;
 import org.serratec.lojasamazonas.exception.ItemNotFoundException;
 import org.serratec.lojasamazonas.service.FuncionarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class FuncionarioController {
 	FuncionarioService funcionarioService;
 	
 	@PostMapping
-	public ResponseEntity<String> create(@RequestBody FuncionarioDTORequest funcionarioDTO) {
+	public ResponseEntity<String> create(@RequestBody FuncionarioDTORequest funcionarioDTO) throws ItemAlreadyExistsException {
 		return ResponseEntity.ok(funcionarioService.create(funcionarioDTO));
 	}
 	

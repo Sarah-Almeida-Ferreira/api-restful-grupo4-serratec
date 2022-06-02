@@ -5,11 +5,13 @@ import java.util.Optional;
 
 import org.serratec.lojasamazonas.dto.CategoriaDTO;
 import org.serratec.lojasamazonas.dto.CategoriaDTORequest;
+import org.serratec.lojasamazonas.exception.ItemAlreadyExistsException;
 import org.serratec.lojasamazonas.exception.ItemNotFoundException;
 import org.serratec.lojasamazonas.exception.MayNotBeNullException;
 import org.serratec.lojasamazonas.mapper.CategoriaMapper;
 import org.serratec.lojasamazonas.model.CategoriaModel;
 import org.serratec.lojasamazonas.repository.CategoriaRepository;
+import org.serratec.lojasamazonas.util.Validation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +23,13 @@ public class CategoriaService {
 	
 	@Autowired
 	CategoriaMapper mapper;
+
+	@Autowired
+	Validation validation;
 	
-	public String crate(CategoriaDTORequest categoriaDto) {
+	public String crate(CategoriaDTORequest categoriaDto) throws ItemAlreadyExistsException {
+		
+		validation.verificarSeCategoriaJáFoiCadastrada(categoriaDto.getNomeCategoria());
 		
 		CategoriaModel categoria = mapper.toModel(categoriaDto);
 		

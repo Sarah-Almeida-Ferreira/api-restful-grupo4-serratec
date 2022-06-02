@@ -5,10 +5,12 @@ import java.util.Optional;
 
 import org.serratec.lojasamazonas.dto.ClienteDTO;
 import org.serratec.lojasamazonas.dto.ClienteDTORequest;
+import org.serratec.lojasamazonas.exception.ItemAlreadyExistsException;
 import org.serratec.lojasamazonas.exception.ItemNotFoundException;
 import org.serratec.lojasamazonas.mapper.ClienteMapper;
 import org.serratec.lojasamazonas.model.ClienteModel;
 import org.serratec.lojasamazonas.repository.ClienteRepository;
+import org.serratec.lojasamazonas.util.Validation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,8 @@ public class ClienteService {
 	ClienteRepository clienteRepository;
 	@Autowired
 	ClienteMapper clienteMapper;
+	@Autowired
+	Validation validation;
 	
 	public List<ClienteDTO> getAll(){
 		List<ClienteDTO> clienteDTOs = clienteMapper.toDTO(clienteRepository.findAll());  
@@ -39,7 +43,11 @@ public class ClienteService {
 		return cliente.get();
 	}
 
-	public String create(ClienteDTORequest clienteDTO) {
+	public String create(ClienteDTORequest clienteDTO) throws ItemAlreadyExistsException {
+		validation.verificarSeCpfJáFoiCadastrado(clienteDTO.getCpf());
+		validation.verificarSeEmailJáFoiCadastrado(clienteDTO.getEmail());
+		validation.verificarSeUsuarioJáFoiCadastrado(clienteDTO.getNomeUsuario());
+		
 		ClienteModel cliente = clienteMapper.toModel(clienteDTO);
 
 		clienteRepository.save(cliente);

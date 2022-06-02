@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.serratec.lojasamazonas.dto.ClienteDTO;
 import org.serratec.lojasamazonas.dto.ClienteDTORequest;
+import org.serratec.lojasamazonas.exception.ItemAlreadyExistsException;
 import org.serratec.lojasamazonas.exception.ItemNotFoundException;
 import org.serratec.lojasamazonas.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class ClienteController {
 		return ResponseEntity.ok(clienteService.getAll());
 	}
 	@PostMapping
-	public ResponseEntity<String> create(@RequestBody ClienteDTORequest clienteDTO){
+	public ResponseEntity<String> create(@RequestBody ClienteDTORequest clienteDTO) throws ItemAlreadyExistsException{
 		return ResponseEntity.ok(clienteService.create(clienteDTO));
 		
 	}
@@ -45,4 +46,5 @@ public class ClienteController {
 	public ResponseEntity<String> delete(@PathVariable Long codigoCliente) throws ItemNotFoundException{
 		return ResponseEntity.ok(clienteService.delete(codigoCliente));
 	}
+	
 }
