@@ -35,7 +35,7 @@ public class ProdutoController {
 	public ResponseEntity<String> create(@RequestBody ProdutoDTORequest produtoDTO) throws ItemNotFoundException, ItemAlreadyExistsException{
 		return ResponseEntity.ok(produtoService.create(produtoDTO));
 	}
-	@PutMapping("/{}codigoProduto")
+	@PutMapping("/{codigoProduto}")
 	public ResponseEntity<String> update(@RequestBody ProdutoDTORequest produtoDTO,@PathVariable long codigoProduto) throws ItemNotFoundException{
 		return ResponseEntity.ok(produtoService.update(codigoProduto,produtoDTO));
 	}
