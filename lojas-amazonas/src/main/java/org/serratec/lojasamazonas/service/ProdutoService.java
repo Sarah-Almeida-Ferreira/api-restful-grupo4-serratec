@@ -19,19 +19,18 @@ public class ProdutoService {
 	@Autowired
 	ProdutoRepository produtoRepository;
 
-	
 	public ProdutoDTO getById(Long codigoProduto) throws ItemNotFoundException {
-		return produtoMapper.toDTO(getModelById(codigoProduto));	
+		return produtoMapper.toDTO(getModelById(codigoProduto));
 	}
-	
+
 	public ProdutoModel getModelById(Long codigoProduto) throws ItemNotFoundException {
 		Optional<ProdutoModel> produtoModel = produtoRepository.findById(codigoProduto);
-		if(produtoModel.isEmpty()) {
-			throw new ItemNotFoundException("Nenhum produto com o codigo "+codigoProduto+" encontrado");
+		if (produtoModel.isEmpty()) {
+			throw new ItemNotFoundException("Nenhum produto com o codigo " + codigoProduto + " encontrado");
 		}
-		return produtoModel.get();	
+		return produtoModel.get();
 	}
-	
+
 	public List<ProdutoDTO> getAll() throws ItemNotFoundException {
 		return produtoMapper.toDTO(produtoRepository.findAll());
 	}
@@ -42,7 +41,34 @@ public class ProdutoService {
 
 		return String.format("Produto CÓDIGO %d criado com sucesso! ", produtoModel.getCodigoProduto());
 	}
-	
-	
-	
+
+	public String update(Long codigoProduto, ProdutoDTORequest produtoDTO) throws ItemNotFoundException {
+		ProdutoModel produto = getModelById(codigoProduto);
+
+		if (produtoDTO.getDataFabricacao() != null) {
+			produto.setDataFabricacao(produtoDTO.getDataFabricacao());
+		}
+		if (produtoDTO.getDescricao() != null) {
+			produto.setDescricao(produtoDTO.getDescricao());
+		}
+		if (produtoDTO.getNomeProduto() != null) {
+			produto.setNomeProduto(produtoDTO.getNomeProduto());
+		}
+		if (produtoDTO.getPeriodoValidade() != null) {
+			produto.setPeriodoValidade(produtoDTO.getPeriodoValidade());
+		}
+		if (produtoDTO.getQuantidadeEstoque() != null) {
+			produto.setQuantidadeEstoque(produtoDTO.getQuantidadeEstoque());
+		}
+		if(produtoDTO.getValorUnitario() != null) {
+			produto.setValorUnitario(produtoDTO.getValorUnitario());
+		}
+			produtoRepository.save(produto);
+			return String.format("Produto CODIGO %d Atualizado com sucesso!", codigoProduto);
+	}
+	public String delete(Long codigoProduto) throws ItemNotFoundException	{
+		getModelById(codigoProduto);	
+		produtoRepository.deleteById(codigoProduto);
+		return String.format("Produto CODIGO %d Deletado com sucesso!", codigoProduto);
+	}
 }
