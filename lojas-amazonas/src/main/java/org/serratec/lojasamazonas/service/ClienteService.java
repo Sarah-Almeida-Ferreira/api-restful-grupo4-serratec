@@ -24,11 +24,6 @@ public class ClienteService {
 		return clienteDTOs;		
 	}	
 	
-	public String create(ClienteDTORequest clienteDTO) {
-		ClienteModel cliente = clienteMapper.toModel(clienteDTO); 
-		clienteRepository.save(cliente);
-		return String.format("Cliente com código %d criado.",cliente.getCodigoCliente());
-	}
 	
 	public ClienteDTO getById(long codigoCliente) throws ItemNotFoundException {
 		ClienteModel cliente = getByIdModel(codigoCliente);
@@ -42,6 +37,57 @@ public class ClienteService {
 			throw new ItemNotFoundException("Nenhum cliente com código "+ codigoCliente +" encontrado.");
 		}
 		return cliente.get();
+	}
+
+	public String create(ClienteDTORequest clienteDTO) {
+		ClienteModel cliente = clienteMapper.toModel(clienteDTO);
+
+		clienteRepository.save(cliente);
+		return String.format("Cliente CÓDIGO %d cadastrado com sucesso!", cliente.getId());
+	}
+
+
+	public ClienteDTO getByCodigo(Long codigoCliente) throws ItemNotFoundException {
+		ClienteModel cliente = getByIdModel(codigoCliente);
+
+		return clienteMapper.toDTO(cliente);
+	}
+
+	public String update(Long codigoCliente, ClienteDTORequest clienteDTO) throws ItemNotFoundException {
+		ClienteModel cliente = getByIdModel(codigoCliente);
+
+		if (clienteDTO.getNomeCompleto() != null) {
+			cliente.setNomeCompleto(clienteDTO.getNomeCompleto());
+		}
+		if (clienteDTO.getCpf() != null) {
+			cliente.setCpf(clienteDTO.getCpf());
+
+		}
+		if (clienteDTO.getDataNascimento() != null) { 
+			cliente.setDataNascimento(clienteDTO.getDataNascimento());
+		}
+		if (clienteDTO.getEmail() != null) {
+			cliente.setEmail(clienteDTO.getEmail());
+		}
+		if (clienteDTO.getEndereco()!= null) {
+			cliente.setEndereco(clienteDTO.getEndereco());
+		}
+		if (clienteDTO.getNomeUsuario() != null) {
+			cliente.setNomeUsuario(clienteDTO.getNomeUsuario());
+		}
+		if (clienteDTO.getTelefone()!= null) {
+			cliente.setTelefone(clienteDTO.getTelefone());
+		}
+		clienteRepository.save(cliente);
+		
+		return String.format("Cliente CÓDIGO %d atualizado com sucesso!", cliente.getId());
+	}
+
+	public String delete(Long codigoCliente) throws ItemNotFoundException {
+		ClienteModel cliente = getByIdModel(codigoCliente);
+
+		clienteRepository.deleteById(codigoCliente);
+		return String.format("Cliente CÓDIGO %d deletado com sucesso!", cliente.getId());
 	}
 
 }
