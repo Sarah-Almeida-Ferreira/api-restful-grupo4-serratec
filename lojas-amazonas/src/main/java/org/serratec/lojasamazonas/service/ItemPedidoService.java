@@ -5,9 +5,14 @@ import java.util.Optional;
 
 import org.serratec.lojasamazonas.dto.ItemPedidoDTO;
 import org.serratec.lojasamazonas.dto.ItemPedidoDTORequest;
+<<<<<<< Updated upstream
 import org.serratec.lojasamazonas.exception.CannotBeChangedException;
 import org.serratec.lojasamazonas.exception.InsufficientStockException;
 import org.serratec.lojasamazonas.exception.ItemAlreadyExistsException;
+=======
+import org.serratec.lojasamazonas.dto.RelatorioMaisVendidosDto;
+import org.serratec.lojasamazonas.exception.EstoqueInsuficienteException;
+>>>>>>> Stashed changes
 import org.serratec.lojasamazonas.exception.ItemNotFoundException;
 import org.serratec.lojasamazonas.mapper.ItemPedidoMapper;
 import org.serratec.lojasamazonas.model.ItemPedidoModel;
@@ -32,14 +37,26 @@ public class ItemPedidoService {
 	@Autowired
 	ProdutoService produtoService;
 	
+<<<<<<< Updated upstream
 	public String create(ItemPedidoDTORequest itemPedido) throws ItemNotFoundException, ItemAlreadyExistsException, InsufficientStockException, CannotBeChangedException {
+=======
+	public String create(ItemPedidoDTORequest itemPedido)
+			throws ItemNotFoundException, EstoqueInsuficienteException {
+>>>>>>> Stashed changes
 		
 		ItemPedidoModel item = mapper.toModel(itemPedido);
+		Integer qtdItemPedido = item.getQuantidade();
 		
+<<<<<<< Updated upstream
 		Validation.VerificarSePodeSerAlterado(item.getPedido());
 		Validation.verificarSeHaEstoqueSuficiente(item);
 		
 		item.setValorTotalItem(item.getProduto().getValorUnitario() * item.getQuantidade());
+=======
+		produtoService.updateStock(qtdItemPedido, item);
+		
+		item.setValorTotalItem(item.getProduto().getValorUnitario() * qtdItemPedido);
+>>>>>>> Stashed changes
 		
 		repository.save(item);
 		
@@ -118,6 +135,10 @@ public class ItemPedidoService {
 		repository.delete(item);
 		
 		return String.format("Item CÓDIGO %d excluída com sucesso!", codigoItem);
+	}
+	
+	public List<RelatorioMaisVendidosDto> relatorio() {
+		return repository.relatorio();
 	}
 	
 }

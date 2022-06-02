@@ -4,9 +4,14 @@ import java.util.List;
 
 import org.serratec.lojasamazonas.dto.ItemPedidoDTO;
 import org.serratec.lojasamazonas.dto.ItemPedidoDTORequest;
+<<<<<<< Updated upstream
 import org.serratec.lojasamazonas.exception.CannotBeChangedException;
 import org.serratec.lojasamazonas.exception.InsufficientStockException;
 import org.serratec.lojasamazonas.exception.ItemAlreadyExistsException;
+=======
+import org.serratec.lojasamazonas.dto.RelatorioMaisVendidosDto;
+import org.serratec.lojasamazonas.exception.EstoqueInsuficienteException;
+>>>>>>> Stashed changes
 import org.serratec.lojasamazonas.exception.ItemNotFoundException;
 import org.serratec.lojasamazonas.service.ItemPedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +33,12 @@ public class ItemPedidoController {
 	ItemPedidoService service;
 	
 	@PostMapping
+<<<<<<< Updated upstream
 	public ResponseEntity<String> create(@RequestBody ItemPedidoDTORequest itemPedido) throws ItemNotFoundException, ItemAlreadyExistsException, InsufficientStockException, CannotBeChangedException {
+=======
+	public ResponseEntity<String> create(@RequestBody ItemPedidoDTORequest itemPedido)
+			throws ItemNotFoundException, EstoqueInsuficienteException {
+>>>>>>> Stashed changes
 		return ResponseEntity.ok(service.create(itemPedido));
 	}
 	
@@ -55,6 +65,11 @@ public class ItemPedidoController {
 	@DeleteMapping("/{codigoItem}")
 	public ResponseEntity<String> delete(@PathVariable Long codigoItem) throws ItemNotFoundException {
 		return ResponseEntity.ok(service.delete(codigoItem));
+	}
+	
+	@GetMapping("/relatorio-mais-vendidos")
+	public ResponseEntity<List<RelatorioMaisVendidosDto>> relatorio() {
+		return ResponseEntity.ok(service.relatorio());
 	}
 	
 }

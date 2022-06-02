@@ -2,8 +2,12 @@ package org.serratec.lojasamazonas.controller;
 
 import org.serratec.lojasamazonas.exception.CannotBeChangedException;
 import org.serratec.lojasamazonas.exception.EmailException;
+<<<<<<< Updated upstream
 import org.serratec.lojasamazonas.exception.InsufficientStockException;
 import org.serratec.lojasamazonas.exception.ItemAlreadyExistsException;
+=======
+import org.serratec.lojasamazonas.exception.EstoqueInsuficienteException;
+>>>>>>> Stashed changes
 import org.serratec.lojasamazonas.exception.ItemNotFoundException;
 import org.serratec.lojasamazonas.exception.MayNotBeNullException;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +16,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class ExceptionController {
-
+	
+	@ExceptionHandler(EstoqueInsuficienteException.class)
+	public ResponseEntity<String> handleEstoqueInsuficienteException(EstoqueInsuficienteException exception) {
+		return ResponseEntity.badRequest().header("x-erro-msg", exception.getMessage()).build();
+	}
+	
 	@ExceptionHandler(ItemNotFoundException.class)
 	public ResponseEntity<String> handleItemNotFoundException(ItemNotFoundException exception) {
 		return ResponseEntity.notFound().header("x-erro-msg", exception.getMessage()).build();
