@@ -32,15 +32,11 @@ public class PedidoMapper {
 	
 	public List<PedidoDto> toDto(List<PedidoModel> listModel) {
 		List<PedidoDto> listDto = new ArrayList<>();
-		PedidoDto dto = new PedidoDto();
+		
 		
 		for(PedidoModel model : listModel) {
-			dto.setCodigoPedido(model.getCodigoPedido());
-			dto.setCliente(model.getCliente().getCodigoCliente());
-			dto.setDataPedido(model.getDataPedido());
-			dto.setStatus(model.getStatus());
-			
-			listDto.add(dto);
+					
+			listDto.add(toDto(model));
 		}
 		
 		return listDto;

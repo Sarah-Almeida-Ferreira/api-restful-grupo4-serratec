@@ -1,12 +1,14 @@
 package org.serratec.lojasamazonas.service;
 
+import java.util.List;
 import java.util.Properties;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
-import org.serratec.lojasamazonas.dto.PedidoEmailDTO;
 import org.serratec.lojasamazonas.exception.EmailException;
+import org.serratec.lojasamazonas.model.ItemPedidoModel;
+import org.serratec.lojasamazonas.model.PedidoModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -30,7 +32,7 @@ public class EmailService {
 	@Value("${spring.mail.host}")
 	private String host;
 
-	private final String emailRemetente = "novafriburgo.cdl@gmail.com";
+	private final String emailRemetente = "lojas.amazonas@yahoo.com";
 
 	public JavaMailSender javaMailSender() {
 
@@ -59,7 +61,8 @@ public class EmailService {
 		emailSender.send(message);
 	}
 
-	public void emailCompra(PedidoEmailDTO emailDTO) throws MessagingException, EmailException{
+	public void emailCompra(PedidoModel pedido) throws MessagingException, EmailException{
+		List<ItemPedidoModel> itemModel = pedido.getItensPedido();
 		
 		this.emailSender = javaMailSender();
 		MimeMessage message = emailSender.createMimeMessage();
@@ -67,39 +70,39 @@ public class EmailService {
 		
 		
 		try {
-			helper.setFrom("novafriburgo.cdl@gmail.com");
+			helper.setFrom("lojas.amazonas@yahoo.com");
 			helper.setTo("patrick.fischer@aluno.senai.br");
 			
-			helper.setSubject("Servico Mecânico");
+			helper.setSubject("Lojas Amazonas");
 			
 			StringBuilder sBuilder = new StringBuilder();
 			sBuilder.append("<html>");
 			sBuilder.append("<body>");
-			sBuilder.append(    "<div style=\"font-weight: 400; color: blue\">");
-			sBuilder.append(       "<center>");
-			sBuilder.append(           "<h1>Olá, " + emailDTO.getNomeCliente()  + "</h1>");
-			sBuilder.append(       "</center>");
-			sBuilder.append(       "<center>");
-			sBuilder.append(           "<p style=\"text-align: justify\">Seu pedido de número: " + emailDTO.getCodigoPedido() + " foi finalizado.</p>");                                
-			sBuilder.append(           "<p style=\"text-align: justify\">Produto: " + emailDTO.getProdutoComprado() + " se encontra .</p>");                                
-			sBuilder.append(           "<p style=\"text-align: justify\">Total: "+ emailDTO.getValorComprado() + ".</p>");
-			sBuilder.append(           "<p style=\"text-align: justify\">Quantidade: "+emailDTO.getQuantidadeComprada()+".</p>");                                
-			//sBuilder.append(           "<p>Segue o link para os formulários: http://localhost:3000/formularios </p>");
-			//sBuilder.append(           "<p>Não deseja mais receber esse tipo de email ? Cl </p><br>");
-			//sBuilder.append(       "</center>");
-			sBuilder.append(       "<center style=\"opacity: 0.4\">");
-			sBuilder.append(          "<img src='http://www.cdlnf.com.br/2017/wp-content/themes/cdl/images/g852.png' alt='logo cdl'>");
-			sBuilder.append(       "</center>");
-			sBuilder.append(        "<div>");
-			sBuilder.append(           "<p>Atenciosamente,</p> <br>");
-			sBuilder.append(           "<p><em>Equipe Charlles Rodas</em> <br>");
-			sBuilder.append(           "<p><strong>Borracharia</strong><br>");
-			sBuilder.append(        "</div>");
-			sBuilder.append(        "<center>");
+			sBuilder.append("<div style=\"font-weight: 400; color: blue\">");
+			sBuilder.append("<center>");
+			sBuilder.append("<h1>Olá, " + pedido.getCliente().getNomeCompleto()  + "</h1>");
+			sBuilder.append("</center>");
+			sBuilder.append("<center>");
+			sBuilder.append("<p style=\"text-align: justify\">Seu pedido de número: " + pedido.getCodigoPedido() + " foi finalizado.</p>");                                
+			for (ItemPedidoModel itemPedidoModel : itemModel) {
+			sBuilder.append("<p style=\"text-align: justify\">Produto: " + itemPedidoModel.getProduto().getNomeProduto() + ".</p>");                                
+			sBuilder.append("<p style=\"text-align: justify\">Valor Unitário: " + itemPedidoModel.getProduto().getValorUnitario() + ".</p>");
+			sBuilder.append("<p style=\"text-align: justify\">Quantidade: "+ itemPedidoModel.getQuantidade()+".</p>");  
+			sBuilder.append("<p style=\"text-align: justify\">Total: "+ itemPedidoModel.getValorTotalItem() + ".</p>");
+			}                              
+			sBuilder.append("<center style=\"opacity: 0.4\">");
+			sBuilder.append("<img src='http://www.cdlnf.com.br/2017/wp-content/themes/cdl/images/g852.png' alt='logo cdl'>");
+			sBuilder.append("</center>");
+			sBuilder.append("<div>");
+			sBuilder.append("<p>Atenciosamente,</p> <br>");
+			sBuilder.append("<p><em>Lojas Amazonas</em> <br>");
+			sBuilder.append("<p><strong>Produtos Quase Oficiais mais Smarts que você!</strong><br>");
+			sBuilder.append("</div>");
+			sBuilder.append("<center>");
 			sBuilder.append("<p>E-mail automático. Caso já tenha respondido este email e enviado o seu formulário favor desconsiderar essa mensagem.</p>");
-			sBuilder.append(        "</center>");
-			sBuilder.append(    "</div>");
-			sBuilder.append(    "</body>");
+			sBuilder.append("</center>");
+			sBuilder.append("</div>");
+			sBuilder.append("</body>");
 			sBuilder.append("</html>");
 			sBuilder.append("");
 			

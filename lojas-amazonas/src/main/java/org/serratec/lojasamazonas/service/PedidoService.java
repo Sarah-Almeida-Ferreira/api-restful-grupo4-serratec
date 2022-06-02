@@ -4,8 +4,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import javax.mail.MessagingException;
+
 import org.serratec.lojasamazonas.dto.PedidoDTORequest;
 import org.serratec.lojasamazonas.dto.PedidoDto;
+import org.serratec.lojasamazonas.exception.EmailException;
 import org.serratec.lojasamazonas.exception.ItemNotFoundException;
 import org.serratec.lojasamazonas.mapper.PedidoMapper;
 import org.serratec.lojasamazonas.model.PedidoModel;
@@ -26,6 +29,9 @@ public class PedidoService {
 
 	@Autowired
 	PedidoMapper pedidoMapper;
+	
+	@Autowired
+	EmailService email;
 
 	public String create(PedidoDTORequest pedidoDto) throws ItemNotFoundException {
 		PedidoModel pedidoModel = pedidoMapper.toModel(pedidoDto);
@@ -68,12 +74,15 @@ public class PedidoService {
 		if (dto.getDataPedido() != null) {
 			model.setDataPedido(dto.getDataPedido());
 		}
+		if(dto.getStatus() != null) {
+			model.setStatus(dto.getStatus());
+		}
 
 		pedidoRepository.save(model);
 		return String.format("Pedido código %d atualizado com sucesso!", codigoPedido);
 	}
 
-	public String finalizar(Long codigoPedido) throws ItemNotFoundException {
+	public String finalizar(Long codigoPedido) throws ItemNotFoundException, MessagingException, EmailException {
 		PedidoModel pedido = getModelByCodigo(codigoPedido);
 
 		if (Validation.naoPodeSerFinalizada(pedido)) {
@@ -83,6 +92,7 @@ public class PedidoService {
 		pedido.setStatus(StatusPedido.FINALIZADO);
 		pedido.setDataPedido(LocalDateTime.now());
 		pedidoRepository.save(pedido);
+		email.emailCompra(pedido);
 		return String.format("Pedido código %d finalizado com sucesso!", codigoPedido);
 	}
 

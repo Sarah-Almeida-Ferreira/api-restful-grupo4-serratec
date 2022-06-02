@@ -2,8 +2,11 @@ package org.serratec.lojasamazonas.controller;
 
 import java.util.List;
 
+import javax.mail.MessagingException;
+
 import org.serratec.lojasamazonas.dto.PedidoDTORequest;
 import org.serratec.lojasamazonas.dto.PedidoDto;
+import org.serratec.lojasamazonas.exception.EmailException;
 import org.serratec.lojasamazonas.exception.ItemNotFoundException;
 import org.serratec.lojasamazonas.service.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +50,7 @@ public class PedidoController {
 	}
 	
 	@PutMapping("/{codigoPedido}/finalizacao")
-	public ResponseEntity<String> finalizar(@PathVariable Long codigoPedido) throws ItemNotFoundException {
+	public ResponseEntity<String> finalizar(@PathVariable Long codigoPedido) throws ItemNotFoundException, MessagingException, EmailException {
 		return ResponseEntity.ok(pedidoService.finalizar(codigoPedido));
 		
 	}

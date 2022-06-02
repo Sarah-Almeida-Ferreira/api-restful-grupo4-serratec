@@ -43,7 +43,7 @@ public class ClienteService {
 		ClienteModel cliente = clienteMapper.toModel(clienteDTO);
 
 		clienteRepository.save(cliente);
-		return String.format("Cliente CÓDIGO %d cadastrado com sucesso!", cliente.getId());
+		return String.format("Cliente CÓDIGO %d cadastrado com sucesso!", cliente.getCodigoCliente());
 	}
 
 
@@ -80,14 +80,12 @@ public class ClienteService {
 		}
 		clienteRepository.save(cliente);
 		
-		return String.format("Cliente CÓDIGO %d atualizado com sucesso!", cliente.getId());
+		return String.format("Cliente CÓDIGO %d atualizado com sucesso!", cliente.getCodigoCliente());
 	}
 
 	public String delete(Long codigoCliente) throws ItemNotFoundException {
-		ClienteModel cliente = getByIdModel(codigoCliente);
-
 		clienteRepository.deleteById(codigoCliente);
-		return String.format("Cliente CÓDIGO %d deletado com sucesso!", cliente.getId());
+		return String.format("Cliente CÓDIGO %d deletado com sucesso!", codigoCliente);
 	}
 
 }
