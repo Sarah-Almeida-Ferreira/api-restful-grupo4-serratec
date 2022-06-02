@@ -2,11 +2,14 @@ package org.serratec.lojasamazonas.dto;
 
 import java.time.LocalDateTime;
 
+import org.serratec.lojasamazonas.model.StatusPedido;
+
 public class PedidoDto {
 
 	private Long codigoPedido;
 	private Long cliente;
 	private LocalDateTime dataPedido;
+	private StatusPedido status;
 	
 	public PedidoDto() {}
 	
@@ -32,6 +35,14 @@ public class PedidoDto {
 
 	public void setDataPedido(LocalDateTime dataPedido) {
 		this.dataPedido = dataPedido;
+	}
+
+	public StatusPedido getStatus() {
+		return status;
+	}
+
+	public void setStatus(StatusPedido status) {
+		this.status = status;
 	}
 
 }

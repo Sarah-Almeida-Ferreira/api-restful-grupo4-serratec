@@ -25,6 +25,7 @@ public class PedidoMapper {
 		dto.setCodigoPedido(model.getCodigoPedido());
 		dto.setCliente(model.getCliente().getCodigoCliente());
 		dto.setDataPedido(model.getDataPedido());
+		dto.setStatus(model.getStatus());
 		
 		return dto;
 	}
@@ -37,6 +38,7 @@ public class PedidoMapper {
 			dto.setCodigoPedido(model.getCodigoPedido());
 			dto.setCliente(model.getCliente().getCodigoCliente());
 			dto.setDataPedido(model.getDataPedido());
+			dto.setStatus(model.getStatus());
 			
 			listDto.add(dto);
 		}

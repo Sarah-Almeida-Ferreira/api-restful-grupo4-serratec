@@ -46,6 +46,12 @@ public class PedidoController {
 		return ResponseEntity.ok(pedidoService.update(codigoPedido, dto));
 	}
 	
+	@PutMapping("/{codigoPedido}/finalizacao")
+	public ResponseEntity<String> finalizar(@PathVariable Long codigoPedido) throws ItemNotFoundException {
+		return ResponseEntity.ok(pedidoService.finalizar(codigoPedido));
+		
+	}
+	
 	@DeleteMapping("/{codigoPedido}")
 	public ResponseEntity<String> delete(@PathVariable Long codigoPedido)
 			throws ItemNotFoundException {

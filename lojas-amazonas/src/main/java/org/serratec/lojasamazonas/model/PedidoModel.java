@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,11 +38,15 @@ public class PedidoModel {
     @Column(name="pedido_list_produto")
     private List<ItemPedidoModel> itensPedido;
     
+    @Enumerated(EnumType.STRING)
+    private StatusPedido status;
+    
     public PedidoModel() {}
     
-	public PedidoModel(ClienteModel cliente, List<ItemPedidoModel> itensPedido) {
+	public PedidoModel(ClienteModel cliente, List<ItemPedidoModel> itensPedido, StatusPedido status) {
 		this.cliente = cliente;
 		this.itensPedido = itensPedido;
+		this.status = status;
 	}
 
 	public Long getCodigoPedido() {
@@ -74,5 +80,20 @@ public class PedidoModel {
 	public void setProdutosPedido(List<ItemPedidoModel> itensPedido) {
 		this.itensPedido = itensPedido;
 	}
-    
+
+	public List<ItemPedidoModel> getItensPedido() {
+		return itensPedido;
+	}
+
+	public void setItensPedido(List<ItemPedidoModel> itensPedido) {
+		this.itensPedido = itensPedido;
+	}
+
+	public StatusPedido getStatus() {
+		return status;
+	}
+
+	public void setStatus(StatusPedido status) {
+		this.status = status;
+	}    
 }
