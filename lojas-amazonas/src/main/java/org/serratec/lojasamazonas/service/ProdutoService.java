@@ -1,9 +1,14 @@
 package org.serratec.lojasamazonas.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import javax.mail.MessagingException;
+
 import org.serratec.lojasamazonas.dto.ProdutoDTO;
 import org.serratec.lojasamazonas.dto.ProdutoDTORequest;
+import org.serratec.lojasamazonas.exception.EmailException;
 import org.serratec.lojasamazonas.exception.ItemAlreadyExistsException;
 import org.serratec.lojasamazonas.exception.ItemNotFoundException;
 import org.serratec.lojasamazonas.mapper.ProdutoMapper;
@@ -22,6 +27,8 @@ public class ProdutoService {
 	ProdutoRepository produtoRepository;
 	@Autowired
 	Validation validation;
+	@Autowired
+	EmailService emailService;
 
 	public ProdutoDTO getById(Long codigoProduto) throws ItemNotFoundException {
 		return produtoMapper.toDTO(getModelById(codigoProduto));
@@ -47,13 +54,24 @@ public class ProdutoService {
 		return String.format("Produto CÓDIGO %d criado com sucesso! ", produtoModel.getCodigoProduto());
 	}
 	
-	public void atualizarEstoque(List<ItemPedidoModel> itens) {
+	public void atualizarEstoque(List<ItemPedidoModel> itens) throws MessagingException, EmailException {
+		
+		List<ProdutoModel> listaEstoqueBaixo = new ArrayList<>();
+		
 		for (ItemPedidoModel item : itens) {
 			ProdutoModel produto = item.getProduto();
 			produto.setQuantidadeEstoque(produto.getQuantidadeEstoque()-item.getQuantidade());
 			produtoRepository.save(produto);
+			
+			if(produto.getQuantidadeEstoque() <= 5) {
+				listaEstoqueBaixo.add(produto);
+			}
 		}
-	}	
+		
+		if(!listaEstoqueBaixo.isEmpty()) {
+			emailService.emailEstoqueBaixo(listaEstoqueBaixo);
+		}
+	}
 	
 
 	public String update(Long codigoProduto, ProdutoDTORequest produtoDTO) throws ItemNotFoundException {

@@ -9,6 +9,7 @@ import javax.mail.internet.MimeMessage;
 import org.serratec.lojasamazonas.exception.EmailException;
 import org.serratec.lojasamazonas.model.ItemPedidoModel;
 import org.serratec.lojasamazonas.model.PedidoModel;
+import org.serratec.lojasamazonas.model.ProdutoModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -67,11 +68,14 @@ public class EmailService {
 		this.emailSender = javaMailSender();
 		MimeMessage message = emailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message, true);
+		String email = pedido
+				.getCliente()
+				.getEmail();
 		
 		
 		try {
-			helper.setFrom("lojas.amazonas@yahoo.com");
-			helper.setTo("patrick.fischer@aluno.senai.br");
+			helper.setFrom(userName);
+			helper.setTo("sarahalmeida013@gmail.com");
 			
 			helper.setSubject("Lojas Amazonas");
 			
@@ -89,6 +93,55 @@ public class EmailService {
 			sBuilder.append("<p style=\"text-align: justify\">Valor Unitário: " + itemPedidoModel.getProduto().getValorUnitario() + ".</p>");
 			sBuilder.append("<p style=\"text-align: justify\">Quantidade: "+ itemPedidoModel.getQuantidade()+".</p>");  
 			sBuilder.append("<p style=\"text-align: justify\">Total: "+ itemPedidoModel.getValorTotalItem() + ".</p>");
+			}                              
+			sBuilder.append("<center style=\"opacity: 0.4\">");
+			sBuilder.append("<img src='http://www.cdlnf.com.br/2017/wp-content/themes/cdl/images/g852.png' alt='logo cdl'>");
+			sBuilder.append("</center>");
+			sBuilder.append("<div>");
+			sBuilder.append("<p>Atenciosamente,</p> <br>");
+			sBuilder.append("<p><em>Lojas Amazonas</em> <br>");
+			sBuilder.append("<p><strong>Produtos Quase Oficiais mais Smarts que você!</strong><br>");
+			sBuilder.append("</div>");
+			sBuilder.append("<center>");
+			sBuilder.append("<p>E-mail automático. Caso já tenha respondido este email e enviado o seu formulário favor desconsiderar essa mensagem.</p>");
+			sBuilder.append("</center>");
+			sBuilder.append("</div>");
+			sBuilder.append("</body>");
+			sBuilder.append("</html>");
+			sBuilder.append("");
+			
+			helper.setText(sBuilder.toString(), true);
+			
+			emailSender.send(message);
+		} catch(Exception e) {
+			throw new EmailException("Houver erro ao enviar o email" + e);
+			
+		}
+	}
+	
+	public void emailEstoqueBaixo(List<ProdutoModel> listaEstoqueBaixo) throws MessagingException, EmailException {
+		
+		this.emailSender = javaMailSender();
+		MimeMessage message = emailSender.createMimeMessage();
+		MimeMessageHelper helper = new MimeMessageHelper(message, true);
+		
+		try {
+			helper.setFrom("lojas.amazonas@yahoo.com");
+			helper.setTo("sarahalmeida013@gmail.com");
+			
+			helper.setSubject("Estoque Baixo");
+			
+			StringBuilder sBuilder = new StringBuilder();
+			sBuilder.append("<html>");
+			sBuilder.append("<body>");
+			sBuilder.append("<div style=\"font-weight: 400; color: blue\">");
+			sBuilder.append("<center>");
+			sBuilder.append("<h1>Alerta de Estoque Baixo</h1>");
+			sBuilder.append("</center>");
+			sBuilder.append("<center>");                              
+			for (ProdutoModel produto : listaEstoqueBaixo) {
+			sBuilder.append("<p style=\"text-align: justify\">Produto: " + produto.getNomeProduto() + ".</p>");
+			sBuilder.append("<p style=\"text-align: justify\">Quantidade: "+ produto.getQuantidadeEstoque()+".</p>");
 			}                              
 			sBuilder.append("<center style=\"opacity: 0.4\">");
 			sBuilder.append("<img src='http://www.cdlnf.com.br/2017/wp-content/themes/cdl/images/g852.png' alt='logo cdl'>");
