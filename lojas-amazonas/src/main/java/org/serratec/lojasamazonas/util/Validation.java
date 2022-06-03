@@ -8,6 +8,7 @@ import org.serratec.lojasamazonas.exception.InsufficientStockException;
 import org.serratec.lojasamazonas.exception.ItemAlreadyExistsException;
 import org.serratec.lojasamazonas.model.ItemPedidoModel;
 import org.serratec.lojasamazonas.model.PedidoModel;
+import org.serratec.lojasamazonas.model.ProdutoModel;
 import org.serratec.lojasamazonas.model.StatusPedido;
 import org.serratec.lojasamazonas.repository.CategoriaRepository;
 import org.serratec.lojasamazonas.repository.ClienteRepository;
@@ -78,15 +79,16 @@ public class Validation {
 		}		
 	}
 	
-	public void verificarSeProdutoJáFoiCadastrado(String nomeProduto) throws ItemAlreadyExistsException {
+	public ProdutoModel verificarSeProdutoJáFoiCadastrado(String nomeProduto) throws ItemAlreadyExistsException {
 		
-		List<String> produtos = produtoInjected.getNomes();
+		List<ProdutoModel> produtos = produtoInjected.findAll();
 		
-		for(String produtoCadastrado : produtos) {
-			if (produtoCadastrado.equals(nomeProduto)) {
-				throw new ItemAlreadyExistsException("Já existe produto cadastrado com este nome!");
+		for(ProdutoModel produtoCadastrado : produtos) {
+			if (produtoCadastrado.getNomeProduto().equals(nomeProduto)) {
+				return produtoCadastrado;
 			}
-		}		
+		}
+		return null;
 	}
 	
 	public static void verificarSeHaEstoqueSuficiente(ItemPedidoModel item) throws InsufficientStockException {

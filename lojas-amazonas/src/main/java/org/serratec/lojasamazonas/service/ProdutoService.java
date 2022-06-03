@@ -40,8 +40,18 @@ public class ProdutoService {
 	}
 
 	public String create(ProdutoDTORequest produtoDTO) throws ItemNotFoundException, ItemAlreadyExistsException {
-		validation.verificarSeProdutoJáFoiCadastrado(produtoDTO.getNomeProduto());
-		ProdutoModel produtoModel = produtoMapper.toModel(produtoDTO);
+		
+		ProdutoModel produtoModel = validation
+							.verificarSeProdutoJáFoiCadastrado(produtoDTO.getNomeProduto());
+		
+		if(produtoModel != null) {
+			produtoModel.setQuantidadeEstoque(produtoDTO.getQuantidadeEstoque());
+			produtoRepository.save(produtoModel);
+			return String.format("Já existe produto cadastrado com esse nome sob o código %d,"
+						+ " portanto apenas seu estoque foi atualizado!", produtoModel.getCodigoProduto());
+		}
+		
+		produtoModel = produtoMapper.toModel(produtoDTO);			
 		produtoRepository.save(produtoModel);
 
 		return String.format("Produto CÓDIGO %d criado com sucesso! ", produtoModel.getCodigoProduto());
