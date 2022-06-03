@@ -51,7 +51,7 @@ public class JwtWebConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/h2-console/**", "/swagger-ui/**", "/swagger-ui.html**", "/v2/api-docs",
+		web.ignoring().antMatchers("/h2-console/**", "/swagger-ui/**", "/swagger-ui.html/**", "/v2/api-docs/**",
 				"/swagger-resources/**");
 	}
 
@@ -67,5 +67,6 @@ public class JwtWebConfig extends WebSecurityConfigurerAdapter {
 		.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 	}
-
+	
+	
 }
