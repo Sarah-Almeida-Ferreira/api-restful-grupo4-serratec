@@ -1,6 +1,7 @@
 
 package org.serratec.lojasamazonas.mapper;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,10 +44,13 @@ public class ItemPedidoMapper {
 		
 		ItemPedidoDTO dto = new ItemPedidoDTO();
 		
+		DecimalFormat formato = new DecimalFormat("#.00"); 
+		String valor = formato.format(model.getValorTotalItem());
+		
 		dto.setCodigoPedido(model.getPedido().getCodigoPedido());
 		dto.setCodigoProduto(model.getProduto().getCodigoProduto());
 		dto.setQuantidade(model.getQuantidade());
-		dto.setValorTotalItem(model.getValorTotalItem());
+		dto.setValorTotalItem(valor);
 		
 		return dto;
 	}

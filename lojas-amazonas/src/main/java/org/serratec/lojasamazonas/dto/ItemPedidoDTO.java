@@ -5,7 +5,7 @@ public class ItemPedidoDTO {
 	private Long codigoProduto;
 	private Long codigoPedido;
 	private Integer quantidade;
-	private Double valorTotalItem;
+	private String valorTotalItem;
 	
 	public ItemPedidoDTO() {}
 
@@ -33,11 +33,11 @@ public class ItemPedidoDTO {
 		this.quantidade = quantidade;
 	}
 
-	public Double getValorTotalItem() {
+	public String getValorTotalItem() {
 		return valorTotalItem;
 	}
 
-	public void setValorTotalItem(Double valorTotalItem) {
+	public void setValorTotalItem(String valorTotalItem) {
 		this.valorTotalItem = valorTotalItem;
 	}
 

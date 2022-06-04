@@ -1,5 +1,6 @@
 package org.serratec.lojasamazonas.service;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Properties;
 
@@ -41,7 +42,7 @@ public class EmailService {
 		Properties prop = new Properties();
 
 		enviarEmail.setHost(host);
-		enviarEmail.setPort(587);
+		enviarEmail.setPort(465);
 		enviarEmail.setUsername(userName);
 		enviarEmail.setPassword(password);
 		enviarEmail.setProtocol("smtp");
@@ -72,10 +73,11 @@ public class EmailService {
 				.getCliente()
 				.getEmail();
 		
+		DecimalFormat formato = new DecimalFormat("#.00"); 		
 		
 		try {
 			helper.setFrom(userName);
-			helper.setTo("sarahalmeida013@gmail.com");
+			helper.setTo(email);
 			
 			helper.setSubject("Lojas Amazonas");
 			
@@ -89,13 +91,13 @@ public class EmailService {
 			sBuilder.append("<center>");
 			sBuilder.append("<p style=\"text-align: justify\">Seu pedido de número: " + pedido.getCodigoPedido() + " foi finalizado.</p>");                                
 			for (ItemPedidoModel itemPedidoModel : itemModel) {
+				String valor = formato.format(itemPedidoModel.getValorTotalItem());
 			sBuilder.append("<p style=\"text-align: justify\">Produto: " + itemPedidoModel.getProduto().getNomeProduto() + ".</p>");                                
 			sBuilder.append("<p style=\"text-align: justify\">Valor Unitário: " + itemPedidoModel.getProduto().getValorUnitario() + ".</p>");
 			sBuilder.append("<p style=\"text-align: justify\">Quantidade: "+ itemPedidoModel.getQuantidade()+".</p>");  
-			sBuilder.append("<p style=\"text-align: justify\">Total: "+ itemPedidoModel.getValorTotalItem() + ".</p>");
+			sBuilder.append("<p style=\"text-align: justify\">Total: "+ valor + ".</p>");
 			}                              
 			sBuilder.append("<center style=\"opacity: 0.4\">");
-			sBuilder.append("<img src='http://www.cdlnf.com.br/2017/wp-content/themes/cdl/images/g852.png' alt='logo cdl'>");
 			sBuilder.append("</center>");
 			sBuilder.append("<div>");
 			sBuilder.append("<p>Atenciosamente,</p> <br>");
@@ -126,8 +128,8 @@ public class EmailService {
 		MimeMessageHelper helper = new MimeMessageHelper(message, true);
 		
 		try {
-			helper.setFrom("lojas.amazonas@yahoo.com");
-			helper.setTo("sarahalmeida013@gmail.com");
+			helper.setFrom(userName);
+			helper.setTo("lojas.amazonas@yahoo.com");
 			
 			helper.setSubject("Estoque Baixo");
 			
@@ -144,7 +146,6 @@ public class EmailService {
 			sBuilder.append("<p style=\"text-align: justify\">Quantidade: "+ produto.getQuantidadeEstoque()+".</p>");
 			}                              
 			sBuilder.append("<center style=\"opacity: 0.4\">");
-			sBuilder.append("<img src='http://www.cdlnf.com.br/2017/wp-content/themes/cdl/images/g852.png' alt='logo cdl'>");
 			sBuilder.append("</center>");
 			sBuilder.append("<div>");
 			sBuilder.append("<p>Atenciosamente,</p> <br>");
